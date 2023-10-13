@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QFile>
 #include <QTcpSocket>
+#include "protocol.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class TcpClient; }
@@ -21,9 +22,19 @@ public:
 public slots://在Qt中，槽函数（Slot）是一种特殊的成员函数，用于响应信号（Signal）的发出。
              //槽函数可以被连接到一个或多个信号上，当信号被发出时，与之连接的槽函数会被自动调用，以响应信号的事件。
     void showConnect();//显示连接的状态
+    void resvMsg();//接收数据
 
 
 
+
+private slots:
+    //void on_send_pd_clicked();
+
+    void on_login_pb_clicked();
+
+    void on_regist_pb_clicked();
+
+    void on_cancel_pb_clicked();
 
 private:
     Ui::TcpClient *ui;

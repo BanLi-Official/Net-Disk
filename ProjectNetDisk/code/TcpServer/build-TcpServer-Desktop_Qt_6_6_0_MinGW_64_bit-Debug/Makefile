@@ -384,6 +384,7 @@ Makefile: ../TcpServer/TcpServer.pro F:/study_app/QT/main/6.6.0/mingw_64/mkspecs
 		F:/study_app/QT/main/6.6.0/mingw_64/lib/Qt6Widgets.prl \
 		F:/study_app/QT/main/6.6.0/mingw_64/lib/Qt6Gui.prl \
 		F:/study_app/QT/main/6.6.0/mingw_64/lib/Qt6Network.prl \
+		F:/study_app/QT/main/6.6.0/mingw_64/lib/Qt6Sql.prl \
 		F:/study_app/QT/main/6.6.0/mingw_64/lib/Qt6Core.prl \
 		F:/study_app/QT/main/6.6.0/mingw_64/lib/Qt6EntryPoint.prl \
 		F:/study_app/QT/main/6.6.0/mingw_64/mkspecs/features/build_pass.prf \
@@ -703,6 +704,7 @@ F:/study_app/QT/main/6.6.0/mingw_64/mkspecs/features/lex.prf:
 F:/study_app/QT/main/6.6.0/mingw_64/lib/Qt6Widgets.prl:
 F:/study_app/QT/main/6.6.0/mingw_64/lib/Qt6Gui.prl:
 F:/study_app/QT/main/6.6.0/mingw_64/lib/Qt6Network.prl:
+F:/study_app/QT/main/6.6.0/mingw_64/lib/Qt6Sql.prl:
 F:/study_app/QT/main/6.6.0/mingw_64/lib/Qt6Core.prl:
 F:/study_app/QT/main/6.6.0/mingw_64/lib/Qt6EntryPoint.prl:
 F:/study_app/QT/main/6.6.0/mingw_64/mkspecs/features/build_pass.prf:
