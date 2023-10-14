@@ -3,7 +3,7 @@
 
 MyTcpServer::MyTcpServer()
 {
-
+    connect(this,SIGNAL(offline(MyTcpSocket*)),this,SLOT(deleteScoket(MyTcpSocket*)));//将下线的信号与deleteScoket(MyTcpSocket *)函数关联起来
 }
 
 MyTcpServer &MyTcpServer::getInstance()
@@ -18,4 +18,26 @@ void MyTcpServer::incomingConnection(qintptr socketDescriptor)//重新定义TCP 
     MyTcpSocket *pTcpSocket=new MyTcpSocket;//新建一个MyTcpSocket，用于接收客户端连接而来的socket
     pTcpSocket->setSocketDescriptor(socketDescriptor);//将一个已有的套接字描述符与一个QTcpSocket对象关联起来，使得QTcpSocket对象可以使用该套接字进行网络通信。
     m_tcpSocketList.append(pTcpSocket);
+}
+
+void MyTcpServer::deleteScoket(MyTcpSocket *mysocket)
+{
+    QList<MyTcpSocket *>::iterator iter=m_tcpSocketList.begin();
+    for(;iter!=m_tcpSocketList.end();iter++)
+    {
+        if(mysocket==*iter)//如果找到了相等的元素，代码会先使用delete运算符删除该元素指向的对象，然后将该元素赋值为NULL，最后使用erase函数将该元素从m_tcpSocketList列表中移除。这样就完成了删除操作。
+        {
+            delete *iter;
+            *iter=NULL;
+            m_tcpSocketList.erase(iter);
+            break;
+        }
+    }
+
+
+    for(int i=0;i<m_tcpSocketList.size();i++)
+    {
+        qDebug()<<m_tcpSocketList.at(i)->getName();
+    }
+    return;
 }

@@ -14,7 +14,10 @@ public:
     void init();//数据库连接的初始化函数
     ~OpeDB();
 
-    bool handleRegist(const char *name,const char *pwd);
+    bool handleRegist(const char *name,const char *pwd);//处理注册的数据库操作
+    bool handleLogin(const char *name,const char *pwd);//处理登录的数据库操作
+    bool handleSetOnline(const char *name,const char *pwd);//将用户的状态设置为在线
+    bool handleSetOffline(const QString name);//将用户的状态设置为离线
 
 signals:
 

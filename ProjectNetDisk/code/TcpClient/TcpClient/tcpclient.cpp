@@ -59,7 +59,7 @@ void TcpClient::showConnect()//展示连接成功信息
 
 void TcpClient::resvMsg()
 {
-    qDebug()<<"收到pdu长度："<<m_tcpSocket.bytesAvailable();//先输出接收到的数据的长度
+    //qDebug()<<"收到pdu长度："<<m_tcpSocket.bytesAvailable();//先输出接收到的数据的长度
     //接收数据
     PDU *pdu=mkPDU(0);
     uint uiPDULen=0;
@@ -75,6 +75,7 @@ void TcpClient::resvMsg()
     switch(pdu->uiMsgType)
     {
     case ENUM_MSG_TYPE_REGIST_RESPOND:
+    {
         if(0==strcmp(pdu->caData,REGIST_OK))
         {
             QMessageBox::information(this,"注册","注册成功！");
@@ -88,7 +89,18 @@ void TcpClient::resvMsg()
             QMessageBox::warning(this,"注册","注册失败，未知原因！");
         }
         break;
-
+    }
+    case ENUM_MSG_TYPE_LOGIN_RESPOND:
+    {
+        if(0==strcmp(pdu->caData,LOGIN_OK))
+        {
+            QMessageBox::information(this,"登录","登录成功！");
+        }
+        else if(0==strcmp(pdu->caData,LOGIN_FAILED))
+        {
+            QMessageBox::warning(this,"登录","登录失败，原因是：用户名或者密码错误！或者请勿重复登录！");
+        }
+    }
     default:
         break;
     }
@@ -125,7 +137,22 @@ void TcpClient::on_send_pd_clicked()//发送按钮点击事件
 
 void TcpClient::on_login_pb_clicked()
 {
-
+    QString strName=ui->name_le->text();
+    QString strPwd=ui->pwd_le->text();
+    if(!strName.isEmpty()&&!strPwd.isEmpty())
+    {
+        PDU *pdu=mkPDU(0);//创建一个登录请求的协议单元
+        pdu->uiMsgType=ENUM_MSG_TYPE_LOGIN_REQUEST;
+        strncpy(pdu->caData,strName.toStdString().c_str(),32);
+        strncpy(pdu->caData+32,strPwd.toStdString().c_str(),32);
+        m_tcpSocket.write((char*)pdu,pdu->uiPDULen);//通过socket发送到服务器
+        free(pdu);
+        pdu=NULL;
+    }
+    else
+    {
+        QMessageBox::warning(this,"登录账户","账户登录失败：账号或密码不能为空！");
+    }
 }
 
 

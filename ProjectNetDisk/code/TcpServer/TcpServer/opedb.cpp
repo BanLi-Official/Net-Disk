@@ -51,3 +51,61 @@ bool OpeDB::handleRegist(const char *name, const char *pwd)//将注册信息传�
     QSqlQuery query;
     return query.exec(insertQuery);//运行插入代码并返回运行结果
 }
+
+bool OpeDB::handleLogin(const char *name, const char *pwd)
+{
+    if(NULL==name||NULL==pwd)
+    {
+        return false;
+    }
+    QString selectQuery=QString("select * from userInfo where name='%1' and pwd='%2' and online=0").arg(name).arg(pwd);//编写sql代码
+    //qDebug()<<selectQuery;
+    QSqlQuery query;
+    query.exec(selectQuery);
+    //return query.next();
+
+    if(query.next())  //防止重复登录，将数据库中的online字段设置为1
+    {
+        bool ret=OpeDB::handleSetOnline(name,pwd);
+        return ret;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool OpeDB::handleSetOnline(const char *name, const char *pwd)//将用户的状态设置为在线
+{
+    QString setString=QString("update userInfo set online=1 where name='%1' and pwd='%2'").arg(name).arg(pwd);//sql代码
+    qDebug()<<setString;
+    QSqlQuery query;
+    bool ret=query.exec(setString);
+    if(ret)
+    {
+        qDebug()<<"用户状态已经成功修改为在线";
+    }
+    else
+    {
+        qDebug()<<"修改失败！";
+    }
+    return ret;
+
+}
+
+bool OpeDB::handleSetOffline(const QString name)
+{
+    QString setString=QString("update userInfo set online=0 where name='%1' ").arg(name);//sql代码
+    qDebug()<<setString;
+    QSqlQuery query;
+    bool ret=query.exec(setString);
+    if(ret)
+    {
+        qDebug()<<"用户状态已经成功修改为离线";
+    }
+    else
+    {
+        qDebug()<<"修改离线失败！";
+    }
+    return ret;
+}

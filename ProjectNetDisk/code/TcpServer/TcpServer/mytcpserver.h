@@ -16,6 +16,10 @@ public:
     static MyTcpServer &getInstance(); //公有的静态成员函数，用于获取唯一的实例
     void incomingConnection(qintptr socketDescriptor); //重新定义TCP server中的protect的虚函数，用于当有请求接入时给予反应
 
+
+public slots:
+    void deleteScoket(MyTcpSocket *mysocket);  //定义一个槽函数，对用户下线做出反应，将socekt从list中删除
+
 private:
     QList<MyTcpSocket*> m_tcpSocketList;//创建一个socket的list
 };
