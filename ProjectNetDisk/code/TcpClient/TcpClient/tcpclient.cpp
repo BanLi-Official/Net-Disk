@@ -52,6 +52,17 @@ void TcpClient::loadConfig()//加载资源的函数
     }
 }
 
+TcpClient &TcpClient::getInstance()
+{
+    static TcpClient instance;
+    return instance;
+}
+
+QTcpSocket &TcpClient::getTcpSocket()
+{
+    return m_tcpSocket;
+}
+
 void TcpClient::showConnect()//展示连接成功信息
 {
     QMessageBox::information(this,"连接服务器","连接服务器成功");
@@ -95,11 +106,17 @@ void TcpClient::resvMsg()
         if(0==strcmp(pdu->caData,LOGIN_OK))
         {
             QMessageBox::information(this,"登录","登录成功！");
+            OpeWidget::getInstance().show();
+            this->hide();
         }
         else if(0==strcmp(pdu->caData,LOGIN_FAILED))
         {
             QMessageBox::warning(this,"登录","登录失败，原因是：用户名或者密码错误！或者请勿重复登录！");
         }
+    }
+    case ENUM_MSG_TYPE_SEARCH_USER_RESPOND:
+    {
+        OpeWidget::getInstance().getFriend()->ShowAllOnlineUsr(pdu);
     }
     default:
         break;

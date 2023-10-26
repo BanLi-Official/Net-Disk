@@ -20,3 +20,4 @@ insert into userInfo(name,pwd) values ('jack','jack'),('Elysia','Elysia');
 insert into userInfo (name,pwd) values('1','1');
 
 update userInfo set online=0 where name='1' and pwd='1';
+select * from userInfo where online='1'

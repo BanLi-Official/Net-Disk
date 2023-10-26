@@ -109,3 +109,21 @@ bool OpeDB::handleSetOffline(const QString name)
     }
     return ret;
 }
+
+QStringList OpeDB::handleAllOnline()
+{
+    QString getString=QString("select * from userInfo where online='1'");//sql代码
+    qDebug()<<getString;
+    QSqlQuery query;
+    query.exec(getString);
+
+    QStringList allOnline;
+
+    while(query.next())
+    {
+        allOnline.append(query.value(2).toString());
+    }
+
+    return allOnline;
+
+}

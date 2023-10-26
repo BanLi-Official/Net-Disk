@@ -1,4 +1,6 @@
 #include "friend.h"
+#include "protocol.h"
+#include "tcpclient.h"
 
 Friend::Friend(QWidget *parent)
     : QWidget{parent}
@@ -45,11 +47,27 @@ Friend::Friend(QWidget *parent)
 
 }
 
+void Friend::ShowAllOnlineUsr(PDU *pdu)
+{
+    if(NULL==pdu)
+    {
+        return ;
+    }
+    online->ShowUser(pdu);
+}
+
 void Friend::ShowOnline()
 {
     if(online->isHidden())
     {
         online->show();
+
+        //传递显示所有用户的消息给服务器
+        PDU *pdu=mkPDU(0);
+        pdu->uiMsgType=ENUM_MSG_TYPE_All_ONLINE_REQUEST;
+        TcpClient::getInstance().getTcpSocket().write((char *)pdu,pdu->uiPDULen);
+        free(pdu);
+        pdu=NULL;
     }
     else
     {

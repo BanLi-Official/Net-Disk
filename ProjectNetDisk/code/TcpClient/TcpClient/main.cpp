@@ -8,16 +8,14 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-//    TcpClient w;
-//    w.show();
 
-    OpeWidget w;
-    w.show();
+    TcpClient::getInstance().show();//在这里TcpClient使用了单例模式
 
-//    Online w;
-//    w.show();
 
-//    Friend w;
-//    w.show();
     return a.exec();
 }
+
+
+
+
+

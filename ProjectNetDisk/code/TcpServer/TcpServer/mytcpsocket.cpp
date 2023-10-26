@@ -99,6 +99,27 @@ void MyTcpSocket::recvMsg()//当有读信号出来的时候，就调用这个函
         respdu=NULL;
         break;
     }
+    case ENUM_MSG_TYPE_All_ONLINE_REQUEST:
+    {
+        qDebug()<<"检测到显示所有用户的请求";
+        //去数据库里面找
+        QStringList allOnline= OpeDB::getInstance().handleAllOnline();
+        //将数据装包并发送
+        uint uiMsgLen=allOnline.size()*32;
+        PDU *retPdu=mkPDU(uiMsgLen);
+        retPdu->uiMsgType=ENUM_MSG_TYPE_SEARCH_USER_RESPOND;
+
+        for(int i=0;i<allOnline.size();i++)
+        {
+            memcpy((char *)(retPdu->caMsg)+i*32,allOnline[i].toStdString().c_str(),allOnline[i].size());
+            qDebug()<<allOnline[i];
+
+        }
+        write((char *)retPdu,retPdu->uiPDULen);
+        free(retPdu);
+        retPdu=NULL;
+        break;
+    }
 
     default:
         break;

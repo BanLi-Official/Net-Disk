@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QTcpSocket>
 #include "protocol.h"
+#include "opewidget.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class TcpClient; }
@@ -18,6 +19,9 @@ public:
     TcpClient(QWidget *parent = nullptr);
     ~TcpClient();
     void loadConfig();//加载资源的函数
+
+    static TcpClient &getInstance();//用单例模式获取tcpClient使其能够在任何时候调用其中的内容，比如：m_tcpSocket
+    QTcpSocket &getTcpSocket();//将TCPSocket返回出去，方便调用，同时增强代码安全性
 
 public slots://在Qt中，槽函数（Slot）是一种特殊的成员函数，用于响应信号（Signal）的发出。
              //槽函数可以被连接到一个或多个信号上，当信号被发出时，与之连接的槽函数会被自动调用，以响应信号的事件。

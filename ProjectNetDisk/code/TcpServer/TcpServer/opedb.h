@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QStringList>
 
 class OpeDB : public QObject
 {
@@ -18,6 +19,7 @@ public:
     bool handleLogin(const char *name,const char *pwd);//处理登录的数据库操作
     bool handleSetOnline(const char *name,const char *pwd);//将用户的状态设置为在线
     bool handleSetOffline(const QString name);//将用户的状态设置为离线
+    QStringList handleAllOnline();//找出所有的在线用户
 
 signals:
 
