@@ -106,8 +106,10 @@ void MyTcpSocket::recvMsg()//当有读信号出来的时候，就调用这个函
         QStringList allOnline= OpeDB::getInstance().handleAllOnline();
         //将数据装包并发送
         uint uiMsgLen=allOnline.size()*32;
+        qDebug()<<"uiMsgLen="<<uiMsgLen;
         PDU *retPdu=mkPDU(uiMsgLen);
-        retPdu->uiMsgType=ENUM_MSG_TYPE_SEARCH_USER_RESPOND;
+
+        retPdu->uiMsgType=ENUM_MSG_TYPE_All_ONLINE_RESPOND;
 
         for(int i=0;i<allOnline.size();i++)
         {
@@ -115,9 +117,38 @@ void MyTcpSocket::recvMsg()//当有读信号出来的时候，就调用这个函
             qDebug()<<allOnline[i];
 
         }
+        qDebug()<<"retPdu->uiPDULen="<<retPdu->uiPDULen;
         write((char *)retPdu,retPdu->uiPDULen);
         free(retPdu);
         retPdu=NULL;
+        qDebug()<<"在线好友查找结果已返回";
+
+        break;
+    }
+    case ENUM_MSG_TYPE_SEARCH_USER_REQUEST:
+    {
+        char name[32];
+        strncpy(name,pdu->caData,32);
+        int state=OpeDB::getInstance().handlSearchUser(name);
+        PDU *respdu=mkPDU(0);
+        respdu->uiMsgType=ENUM_MSG_TYPE_SEARCH_USER_RESPOND;
+        if(state==1)
+        {
+            strcpy(respdu->caData,SEARCH_USER_ONLINE);
+        }
+        else if(state==0)
+        {
+            strcpy(respdu->caData,SEARCH_USER_OFFLINE);
+        }
+        else
+        {
+            strcpy(respdu->caData,SEARCH_USER_NO);
+        }
+        write((char *)respdu,respdu->uiPDULen);
+        free(respdu);
+        respdu==NULL;
+
+
         break;
     }
 

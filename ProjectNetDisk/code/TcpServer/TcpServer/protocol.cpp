@@ -1,4 +1,5 @@
 #include "protocol.h"
+#include <QDebug>
 
 
 PDU *mkPDU(uint uiMsgLen)
@@ -9,6 +10,7 @@ PDU *mkPDU(uint uiMsgLen)
         exit(EXIT_FAILURE);
     }
     memset(pdu,0,sizeof(PDU)+uiMsgLen);//将指针pdu所指向的内存空间中的前sizeof(PDU)+uiMsgLen个字节全部设置为0。
+    qDebug()<<"sizeof(PDU)="<<sizeof(PDU);
     pdu->uiPDULen=sizeof(PDU)+uiMsgLen;
     pdu->uiMsgLen=uiMsgLen;
     return pdu;

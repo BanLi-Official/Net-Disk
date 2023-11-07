@@ -127,3 +127,25 @@ QStringList OpeDB::handleAllOnline()
     return allOnline;
 
 }
+
+int OpeDB::handlSearchUser(const char *name)
+{
+    QString getString=QString("select * from userInfo where name='%1'").arg(name);
+    qDebug()<<"查找特定用户的SQL语句："<<getString;
+    QSqlQuery query;
+    query.exec(getString);
+    if(query.next())
+    {
+        int state=query.value(3).toInt();
+        qDebug()<<"用户在线状态："<<state;
+        return state;
+    }
+    else
+    {
+        qDebug()<<"用户在线状态未知";
+        return -1;
+    }
+
+
+
+}

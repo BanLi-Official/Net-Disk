@@ -12,6 +12,10 @@ typedef unsigned int uint;
 #define LOGIN_OK "login ok"
 #define LOGIN_FAILED "login failed:账户或者密码错误！或者请勿重复登录"
 
+#define SEARCH_USER_NO "用户不存在"
+#define SEARCH_USER_ONLINE "用户在线"
+#define SEARCH_USER_OFFLINE "用户不在线"
+
 enum ENUM_MSG_TYPE    //利用枚举类型，设置消息的类型
 {
     ENUM_MSG_TYPE_MIN=0,

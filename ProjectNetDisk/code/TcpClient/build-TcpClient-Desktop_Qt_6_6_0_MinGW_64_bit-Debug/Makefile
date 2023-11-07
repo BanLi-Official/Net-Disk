@@ -354,7 +354,6 @@ Makefile: ../TcpClient/TcpClient.pro F:/study_app/QT/main/6.6.0/mingw_64/mkspecs
 		F:/study_app/QT/main/6.6.0/mingw_64/mkspecs/features/qt_config.prf \
 		F:/study_app/QT/main/6.6.0/mingw_64/mkspecs/win32-g++/qmake.conf \
 		F:/study_app/QT/main/6.6.0/mingw_64/mkspecs/features/spec_post.prf \
-		.qmake.stash \
 		F:/study_app/QT/main/6.6.0/mingw_64/mkspecs/features/exclusive_builds.prf \
 		F:/study_app/QT/main/6.6.0/mingw_64/mkspecs/features/toolchain.prf \
 		F:/study_app/QT/main/6.6.0/mingw_64/mkspecs/features/default_pre.prf \
@@ -386,6 +385,7 @@ Makefile: ../TcpClient/TcpClient.pro F:/study_app/QT/main/6.6.0/mingw_64/mkspecs
 		F:/study_app/QT/main/6.6.0/mingw_64/lib/Qt6Network.prl \
 		F:/study_app/QT/main/6.6.0/mingw_64/lib/Qt6Core.prl \
 		F:/study_app/QT/main/6.6.0/mingw_64/lib/Qt6EntryPoint.prl \
+		.qmake.stash \
 		F:/study_app/QT/main/6.6.0/mingw_64/mkspecs/features/build_pass.prf \
 		../TcpClient/config.qrc
 	$(QMAKE) -o Makefile ..\TcpClient\TcpClient.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
@@ -673,7 +673,6 @@ F:/study_app/QT/main/6.6.0/mingw_64/mkspecs/features/qt_functions.prf:
 F:/study_app/QT/main/6.6.0/mingw_64/mkspecs/features/qt_config.prf:
 F:/study_app/QT/main/6.6.0/mingw_64/mkspecs/win32-g++/qmake.conf:
 F:/study_app/QT/main/6.6.0/mingw_64/mkspecs/features/spec_post.prf:
-.qmake.stash:
 F:/study_app/QT/main/6.6.0/mingw_64/mkspecs/features/exclusive_builds.prf:
 F:/study_app/QT/main/6.6.0/mingw_64/mkspecs/features/toolchain.prf:
 F:/study_app/QT/main/6.6.0/mingw_64/mkspecs/features/default_pre.prf:
@@ -705,6 +704,7 @@ F:/study_app/QT/main/6.6.0/mingw_64/lib/Qt6Gui.prl:
 F:/study_app/QT/main/6.6.0/mingw_64/lib/Qt6Network.prl:
 F:/study_app/QT/main/6.6.0/mingw_64/lib/Qt6Core.prl:
 F:/study_app/QT/main/6.6.0/mingw_64/lib/Qt6EntryPoint.prl:
+.qmake.stash:
 F:/study_app/QT/main/6.6.0/mingw_64/mkspecs/features/build_pass.prf:
 ../TcpClient/config.qrc:
 qmake: FORCE

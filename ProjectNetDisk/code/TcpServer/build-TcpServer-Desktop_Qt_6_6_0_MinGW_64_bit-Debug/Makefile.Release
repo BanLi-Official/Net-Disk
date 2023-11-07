@@ -558,6 +558,7 @@ release/moc_opedb.cpp: ../TcpServer/opedb.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qhash.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qvarlengtharray.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/q23utility.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QStringList \
 		release/moc_predefs.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/bin/moc.exe
 	F:\study_app\QT\main\6.6.0\mingw_64\bin\moc.exe $(DEFINES) --include F:/WORKS/c++/ProjectNetDisk/code/TcpServer/build-TcpServer-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/release/moc_predefs.h -IF:/study_app/QT/main/6.6.0/mingw_64/mkspecs/win32-g++ -IF:/WORKS/c++/ProjectNetDisk/code/TcpServer/TcpServer -IF:/study_app/QT/main/6.6.0/mingw_64/include -IF:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets -IF:/study_app/QT/main/6.6.0/mingw_64/include/QtGui -IF:/study_app/QT/main/6.6.0/mingw_64/include/QtNetwork -IF:/study_app/QT/main/6.6.0/mingw_64/include/QtSql -IF:/study_app/QT/main/6.6.0/mingw_64/include/QtCore -I. -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -IF:/study_app/QT/main/Tools/mingw1120_64/x86_64-w64-mingw32/include ..\TcpServer\opedb.h -o release\moc_opedb.cpp
@@ -944,7 +945,8 @@ release/main.o: ../TcpServer/main.cpp ../TcpServer/tcpserver.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtSql/qtsql-config.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtSql/qtsqlexports.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtSql/QSqlQuery \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtSql/qsqlquery.h
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtSql/qsqlquery.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QStringList
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\main.o ..\TcpServer\main.cpp
 
 release/mytcpserver.o: ../TcpServer/mytcpserver.cpp ../TcpServer/mytcpserver.h \
@@ -1253,7 +1255,8 @@ release/mytcpsocket.o: ../TcpServer/mytcpsocket.cpp ../TcpServer/mytcpsocket.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtSql/qtsql-config.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtSql/qtsqlexports.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtSql/QSqlQuery \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtSql/qsqlquery.h
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtSql/qsqlquery.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QStringList
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mytcpsocket.o ..\TcpServer\mytcpsocket.cpp
 
 release/opedb.o: ../TcpServer/opedb.cpp ../TcpServer/opedb.h \
@@ -1374,6 +1377,7 @@ release/opedb.o: ../TcpServer/opedb.cpp ../TcpServer/opedb.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qhash.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qvarlengtharray.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/q23utility.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QStringList \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QMessageBox \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qmessagebox.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -1431,7 +1435,111 @@ release/opedb.o: ../TcpServer/opedb.cpp ../TcpServer/opedb.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\opedb.o ..\TcpServer\opedb.cpp
 
-release/protocol.o: ../TcpServer/protocol.cpp ../TcpServer/protocol.h
+release/protocol.o: ../TcpServer/protocol.cpp ../TcpServer/protocol.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QDebug \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qdebug.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qcontainerfwd.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtconfigmacros.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtconfiginclude.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qconfig.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtcore-config.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtypes.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qprocessordetection.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qassert.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qcompilerdetection.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qsystemdetection.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtcoreexports.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtdeprecationmarkers.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtversionchecks.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtnoop.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtextstream.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qiodevicebase.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qglobal.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtpreprocessorsupport.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtversion.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtclasshelpermacros.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtypeinfo.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qsysinfo.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qlogging.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qflags.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qcompare_impl.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qatomic.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qbasicatomic.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qatomic_cxx11.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qgenericatomic.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qconstructormacros.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qdarwinhelpers.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qexceptionhandling.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qforeach.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qttypetraits.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qfunctionpointer.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qglobalstatic.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qmalloc.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qminmax.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qnumeric.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qoverload.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qswap.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtenvironmentvariables.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtresource.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qttranslation.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qversiontagging.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qchar.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qstringview.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qbytearray.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qrefcount.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qnamespace.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtmetamacros.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qarraydata.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qpair.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qarraydatapointer.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qarraydataops.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qcontainertools_impl.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qxptype_traits.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/q20functional.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/q20memory.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qbytearrayalgorithms.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qbytearrayview.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qstringfwd.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/q20type_traits.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qstringliteral.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qstringalgorithms.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qscopedpointer.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qstringconverter_base.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qstring.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qlatin1stringview.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qanystringview.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qutf8stringview.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qstringtokenizer.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qstringbuilder.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qcontiguouscache.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qsharedpointer.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qshareddata.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qhashfunctions.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qsharedpointer_impl.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qmetatype.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qcompare.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qdatastream.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qfloat16.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qmath.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qalgorithms.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qiterable.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qmetacontainer.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qcontainerinfo.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtaggedpointer.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qobjectdefs.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qobjectdefs_impl.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qfunctionaltools_impl.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qscopeguard.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qlist.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qiterator.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qbytearraylist.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qstringlist.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qstringmatcher.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qmap.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qshareddata_impl.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qset.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qhash.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qvarlengtharray.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\protocol.o ..\TcpServer\protocol.cpp
 
 release/tcpserver.o: ../TcpServer/tcpserver.cpp ../TcpServer/tcpserver.h \

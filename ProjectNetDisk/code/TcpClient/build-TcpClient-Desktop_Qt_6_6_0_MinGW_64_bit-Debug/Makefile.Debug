@@ -513,6 +513,7 @@ debug/moc_friend.cpp: ../TcpClient/friend.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qgridlayout.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QHBoxLayout \
 		../TcpClient/online.h \
+		../TcpClient/protocol.h \
 		debug/moc_predefs.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/bin/moc.exe
 	F:\study_app\QT\main\6.6.0\mingw_64\bin\moc.exe $(DEFINES) --include F:/WORKS/c++/ProjectNetDisk/code/TcpClient/build-TcpClient-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/debug/moc_predefs.h -IF:/study_app/QT/main/6.6.0/mingw_64/mkspecs/win32-g++ -IF:/WORKS/c++/ProjectNetDisk/code/TcpClient/TcpClient -IF:/study_app/QT/main/6.6.0/mingw_64/include -IF:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets -IF:/study_app/QT/main/6.6.0/mingw_64/include/QtGui -IF:/study_app/QT/main/6.6.0/mingw_64/include/QtNetwork -IF:/study_app/QT/main/6.6.0/mingw_64/include/QtCore -I. -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -IF:/study_app/QT/main/Tools/mingw1120_64/x86_64-w64-mingw32/include ..\TcpClient\friend.h -o debug\moc_friend.cpp
@@ -680,6 +681,7 @@ debug/moc_online.cpp: ../TcpClient/online.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QSizeF \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtGui/QTransform \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qnativeinterface.h \
+		../TcpClient/protocol.h \
 		debug/moc_predefs.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/bin/moc.exe
 	F:\study_app\QT\main\6.6.0\mingw_64\bin\moc.exe $(DEFINES) --include F:/WORKS/c++/ProjectNetDisk/code/TcpClient/build-TcpClient-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/debug/moc_predefs.h -IF:/study_app/QT/main/6.6.0/mingw_64/mkspecs/win32-g++ -IF:/WORKS/c++/ProjectNetDisk/code/TcpClient/TcpClient -IF:/study_app/QT/main/6.6.0/mingw_64/include -IF:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets -IF:/study_app/QT/main/6.6.0/mingw_64/include/QtGui -IF:/study_app/QT/main/6.6.0/mingw_64/include/QtNetwork -IF:/study_app/QT/main/6.6.0/mingw_64/include/QtCore -I. -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -IF:/study_app/QT/main/Tools/mingw1120_64/x86_64-w64-mingw32/include ..\TcpClient\online.h -o debug\moc_online.cpp
@@ -887,6 +889,7 @@ debug/moc_opewidget.cpp: ../TcpClient/opewidget.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qgridlayout.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QHBoxLayout \
 		../TcpClient/online.h \
+		../TcpClient/protocol.h \
 		../TcpClient/book.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QStackedWidget \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qstackedwidget.h \
@@ -1068,6 +1071,50 @@ debug/moc_tcpclient.cpp: ../TcpClient/tcpclient.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtNetwork/qabstractsocket.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtNetwork/qhostaddress.h \
 		../TcpClient/protocol.h \
+		../TcpClient/opewidget.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QListWidget \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qlistwidget.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qlistview.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qabstractitemview.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qabstractscrollarea.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qframe.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qabstractitemmodel.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qitemselectionmodel.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qabstractitemdelegate.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qstyleoption.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qlocale.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qabstractspinbox.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtGui/qvalidator.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qregularexpression.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qslider.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qabstractslider.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qstyle.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qtabbar.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qtabwidget.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qrubberband.h \
+		../TcpClient/friend.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QTextEdit \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qtextedit.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtGui/qtextdocument.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtGui/qtextoption.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtGui/qtextcursor.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtGui/qtextformat.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtGui/qpen.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QLineEdit \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qlineedit.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QPushButton \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qpushbutton.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qabstractbutton.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QVBoxLayout \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qboxlayout.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qlayout.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qlayoutitem.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qgridlayout.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QHBoxLayout \
+		../TcpClient/online.h \
+		../TcpClient/book.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QStackedWidget \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qstackedwidget.h \
 		debug/moc_predefs.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/bin/moc.exe
 	F:\study_app\QT\main\6.6.0\mingw_64\bin\moc.exe $(DEFINES) --include F:/WORKS/c++/ProjectNetDisk/code/TcpClient/build-TcpClient-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/debug/moc_predefs.h -IF:/study_app/QT/main/6.6.0/mingw_64/mkspecs/win32-g++ -IF:/WORKS/c++/ProjectNetDisk/code/TcpClient/TcpClient -IF:/study_app/QT/main/6.6.0/mingw_64/include -IF:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets -IF:/study_app/QT/main/6.6.0/mingw_64/include/QtGui -IF:/study_app/QT/main/6.6.0/mingw_64/include/QtNetwork -IF:/study_app/QT/main/6.6.0/mingw_64/include/QtCore -I. -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -IF:/study_app/QT/main/Tools/mingw1120_64/x86_64-w64-mingw32/include ..\TcpClient\tcpclient.h -o debug\moc_tcpclient.cpp
@@ -1465,7 +1512,23 @@ debug/friend.o: ../TcpClient/friend.cpp ../TcpClient/friend.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qlayoutitem.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qgridlayout.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QHBoxLayout \
-		../TcpClient/online.h
+		../TcpClient/online.h \
+		../TcpClient/protocol.h \
+		../TcpClient/tcpclient.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QFile \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qfile.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qfiledevice.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtNetwork/QTcpSocket \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtNetwork/qtcpsocket.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtNetwork/qtnetworkglobal.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtNetwork/qtnetwork-config.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtNetwork/qtnetworkexports.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtNetwork/qabstractsocket.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtNetwork/qhostaddress.h \
+		../TcpClient/opewidget.h \
+		../TcpClient/book.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QStackedWidget \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qstackedwidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\friend.o ..\TcpClient\friend.cpp
 
 debug/main.o: ../TcpClient/main.cpp ../TcpClient/tcpclient.h \
@@ -1872,59 +1935,8 @@ debug/online.o: ../TcpClient/online.cpp ../TcpClient/online.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QSizeF \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtGui/QTransform \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qnativeinterface.h \
-		ui_online.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QVariant \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QApplication \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qapplication.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qcoreapplication.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qeventloop.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qcoreapplication_platform.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qfuture.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qfutureinterface.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qmutex.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qdeadlinetimer.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qelapsedtimer.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtsan_impl.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qresultstore.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qfuture_impl.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qthreadpool.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qthread.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qrunnable.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qexception.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qpromise.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtGui/qguiapplication.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtGui/qinputmethod.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qlocale.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtGui/qguiapplication_platform.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QHBoxLayout \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qboxlayout.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qlayout.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qlayoutitem.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qgridlayout.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QListWidget \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qlistwidget.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qlistview.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qabstractitemview.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qabstractscrollarea.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qframe.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qabstractitemmodel.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qitemselectionmodel.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qabstractitemdelegate.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qstyleoption.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qabstractspinbox.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtGui/qvalidator.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qregularexpression.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qslider.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qabstractslider.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qstyle.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qtabbar.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qtabwidget.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qrubberband.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QPushButton \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qpushbutton.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qabstractbutton.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QSpacerItem \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QVBoxLayout
+		../TcpClient/protocol.h \
+		ui_online.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\online.o ..\TcpClient\online.cpp
 
 debug/opewidget.o: ../TcpClient/opewidget.cpp ../TcpClient/opewidget.h \
@@ -2130,6 +2142,7 @@ debug/opewidget.o: ../TcpClient/opewidget.cpp ../TcpClient/opewidget.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qgridlayout.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QHBoxLayout \
 		../TcpClient/online.h \
+		../TcpClient/protocol.h \
 		../TcpClient/book.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QStackedWidget \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qstackedwidget.h
@@ -2312,51 +2325,51 @@ debug/tcpclient.o: ../TcpClient/tcpclient.cpp ../TcpClient/tcpclient.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtNetwork/qabstractsocket.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtNetwork/qhostaddress.h \
 		../TcpClient/protocol.h \
-		ui_tcpclient.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QVariant \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QApplication \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qapplication.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qcoreapplication.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qeventloop.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qcoreapplication_platform.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qfuture.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qfutureinterface.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qmutex.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qdeadlinetimer.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qelapsedtimer.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtsan_impl.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qresultstore.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qfuture_impl.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qthreadpool.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qthread.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qrunnable.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qexception.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qpromise.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtGui/qguiapplication.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtGui/qinputmethod.h \
+		../TcpClient/opewidget.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QListWidget \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qlistwidget.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qlistview.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qabstractitemview.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qabstractscrollarea.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qframe.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qabstractitemmodel.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qitemselectionmodel.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qabstractitemdelegate.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qstyleoption.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qlocale.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtGui/qguiapplication_platform.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QHBoxLayout \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qabstractspinbox.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtGui/qvalidator.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qregularexpression.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qslider.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qabstractslider.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qstyle.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qtabbar.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qtabwidget.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qrubberband.h \
+		../TcpClient/friend.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QTextEdit \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qtextedit.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtGui/qtextdocument.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtGui/qtextoption.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtGui/qtextcursor.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtGui/qtextformat.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtGui/qpen.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QLineEdit \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qlineedit.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QPushButton \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qpushbutton.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qabstractbutton.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QVBoxLayout \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qboxlayout.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qlayout.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qlayoutitem.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qgridlayout.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QLabel \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qlabel.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qframe.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtGui/qpicture.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtGui/qtextdocument.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QLineEdit \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qlineedit.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtGui/qtextcursor.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtGui/qtextformat.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtGui/qpen.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtGui/qtextoption.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QPushButton \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qpushbutton.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qabstractbutton.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QSpacerItem \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QVBoxLayout \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QHBoxLayout \
+		../TcpClient/online.h \
+		../TcpClient/book.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QStackedWidget \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/qstackedwidget.h \
+		ui_tcpclient.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QByteArray \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QDebug \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QMessageBox \

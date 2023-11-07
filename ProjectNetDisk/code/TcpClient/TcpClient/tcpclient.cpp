@@ -4,6 +4,7 @@
 #include "QDebug"
 #include "QMessageBox"
 #include "QHostAddress"
+#include "protocol.h"
 
 TcpClient::TcpClient(QWidget *parent)
     : QWidget(parent)
@@ -70,16 +71,16 @@ void TcpClient::showConnect()//展示连接成功信息
 
 void TcpClient::resvMsg()
 {
-    //qDebug()<<"收到pdu长度："<<m_tcpSocket.bytesAvailable();//先输出接收到的数据的长度
+    qDebug()<<"收到pdu长度："<<m_tcpSocket.bytesAvailable();//先输出接收到的数据的长度
     //接收数据
-    PDU *pdu=mkPDU(0);
     uint uiPDULen=0;
     m_tcpSocket.read((char *)&uiPDULen,sizeof(uint));
     uint uiMsgLen=uiPDULen-sizeof(PDU);
+    PDU *pdu=mkPDU(uiMsgLen);
     m_tcpSocket.read((char *)pdu+sizeof(uint),uiPDULen-sizeof(uint));
     pdu->uiMsgLen=uiMsgLen;
 
-    //qDebug()<<"pduLen="<<pdu->uiPDULen<<" MsgLen="<<pdu->uiMsgLen<<" caData="<<pdu->caData;
+
 
 
     //按照接收到的不同数据做出不同的反应：
@@ -113,10 +114,34 @@ void TcpClient::resvMsg()
         {
             QMessageBox::warning(this,"登录","登录失败，原因是：用户名或者密码错误！或者请勿重复登录！");
         }
+        break;
+    }
+    case ENUM_MSG_TYPE_All_ONLINE_RESPOND:
+    {
+
+        OpeWidget::getInstance().getFriend()->ShowAllOnlineUsr(pdu);
+        //qDebug()<<(pdu);
+
+        break;
     }
     case ENUM_MSG_TYPE_SEARCH_USER_RESPOND:
     {
-        OpeWidget::getInstance().getFriend()->ShowAllOnlineUsr(pdu);
+        char state[32];
+        strncpy(state,pdu->caData,32);
+        qDebug()<<state;
+        if(0==strcmp(SEARCH_USER_NO,pdu->caData))
+        {
+            QMessageBox::information(this,"搜索",QString("%1:%2").arg(OpeWidget::getInstance().getFriend()->m_strName).arg(SEARCH_USER_NO));
+        }
+        else if(0==strcmp(SEARCH_USER_ONLINE,pdu->caData))
+        {
+            QMessageBox::information(this,"搜索",QString("%1:%2").arg(OpeWidget::getInstance().getFriend()->m_strName).arg(SEARCH_USER_ONLINE));
+        }
+        else if(0==strcmp(SEARCH_USER_OFFLINE,pdu->caData))
+        {
+            QMessageBox::information(this,"搜索",QString("%1:%2").arg(OpeWidget::getInstance().getFriend()->m_strName).arg(SEARCH_USER_OFFLINE));
+        }
+        break;
     }
     default:
         break;

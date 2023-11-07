@@ -18,10 +18,13 @@ public:
     explicit Friend(QWidget *parent = nullptr);
     void ShowAllOnlineUsr(PDU *pdu);
 
+    QString m_strName;//临时存储的名字
+
 signals:
 
 public slots:
     void ShowOnline();//展示好友界面
+    void SearchUser();//查找用户
 
 private:
     QTextEdit *m_pShowMsgTE;//用于展示信息

@@ -20,6 +20,7 @@ public:
     bool handleSetOnline(const char *name,const char *pwd);//将用户的状态设置为在线
     bool handleSetOffline(const QString name);//将用户的状态设置为离线
     QStringList handleAllOnline();//找出所有的在线用户
+    int handlSearchUser(const char *name);//查找指定用户
 
 signals:
 

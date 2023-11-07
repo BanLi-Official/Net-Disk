@@ -17,6 +17,5 @@ QMAKE_CXX.INCDIRS = \
 QMAKE_CXX.LIBDIRS = \
     F:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0 \
     F:/study_app/QT/main/Tools/mingw1120_64/lib/gcc \
-    C:/MinGW/lib \
     F:/study_app/QT/main/Tools/mingw1120_64/x86_64-w64-mingw32/lib \
     F:/study_app/QT/main/Tools/mingw1120_64/lib
