@@ -2,6 +2,7 @@
 #include <QDebug>
 #include "opedb.h"
 #include "protocol.h"
+#include "mytcpserver.h"
 
 MyTcpSocket::MyTcpSocket(QObject *parent)
     : QTcpSocket{parent}
@@ -146,12 +147,119 @@ void MyTcpSocket::recvMsg()//当有读信号出来的时候，就调用这个函
         }
         write((char *)respdu,respdu->uiPDULen);
         free(respdu);
-        respdu==NULL;
+        respdu=NULL;
 
 
         break;
     }
+    case ENUM_MSG_TYPE_ADD_FRIEND_REQUEST:
+    {
+        char FriendName[32];
+        char LoginName[32];
+        strncpy(FriendName,pdu->caData,32);
+        strncpy(LoginName,pdu->caData+32,32);
+        int ret=OpeDB::getInstance().handlAddFriend(FriendName,LoginName);
+        //PDU *respdu=NULL;
+        if(ret==-1)
+        {
+            qDebug()<<UNKNOW_ERROR;
+            PDU *respdu=mkPDU(0);
+            respdu->uiMsgType=ENUM_MSG_TYPE_ADD_FRIEND_RESPOND;
+            strcpy(respdu->caData,UNKNOW_ERROR);
+            write((char *)respdu,respdu->uiPDULen);
+            free(respdu);
+            respdu=NULL;
+        }
+        else if(ret==0)
+        {
+            qDebug()<<EXISTED_FRIEND;
+            PDU *respdu=mkPDU(0);
+            respdu->uiMsgType=ENUM_MSG_TYPE_ADD_FRIEND_RESPOND;
+            strcpy(respdu->caData,EXISTED_FRIEND);
+            write((char *)respdu,respdu->uiPDULen);
+            free(respdu);
+            respdu=NULL;
+        }
+        else if(ret==1)
+        {
+            qDebug()<<"用户在线";
+            MyTcpServer::getInstance().resend(FriendName,pdu);
+        }
+        else if(ret==2)
+        {
+            qDebug()<<ADD_FRIENDS_OFFLINE;
+            PDU *respdu=mkPDU(0);
+            respdu->uiMsgType=ENUM_MSG_TYPE_ADD_FRIEND_RESPOND;
+            strcpy(respdu->caData,ADD_FRIENDS_OFFLINE);
+            write((char *)respdu,respdu->uiPDULen);
+            free(respdu);
+            respdu=NULL;
+        }
+        else if(ret==3)
+        {
+            qDebug()<<ADD_FRIEND_NO_EXSIT;
+            PDU *respdu=mkPDU(0);
+            respdu->uiMsgType=ENUM_MSG_TYPE_ADD_FRIEND_RESPOND;
+            strcpy(respdu->caData,ADD_FRIEND_NO_EXSIT);
+            write((char *)respdu,respdu->uiPDULen);
+            free(respdu);
+            respdu=NULL;
+        }
+        else
+        {
+            PDU *respdu=mkPDU(0);
+            respdu->uiMsgType=ENUM_MSG_TYPE_ADD_FRIEND_RESPOND;
+            strcpy(respdu->caData,UNKNOW_ERROR);
+            qDebug()<<"未知错误";
+            write((char *)respdu,respdu->uiPDULen);
+            free(respdu);
+            respdu=NULL;
+        }
 
+        break;
+    }
+    case ENUM_MSG_TYPE_ADD_FRIEND_AGGREE:
+    {
+        char fromName[32];
+        char toName[32];
+        memcpy(fromName,pdu->caData,32);
+        memcpy(toName,pdu->caData+32,32);
+        bool ret=OpeDB::getInstance().handlAddFriendToDataset(fromName,toName);
+        if(ret)
+        {
+            qDebug()<<"好友添加成功";
+            PDU *respdu=mkPDU(0);
+            respdu->uiMsgType=ENUM_MSG_TYPE_ADD_FRIEND_SUCESS;
+            strncpy(respdu->caData,toName,32);//告诉申请者谁同意了
+            MyTcpServer::getInstance().resend(fromName,respdu);
+            free(respdu);
+            respdu=NULL;
+
+
+        }
+        else
+        {
+            qDebug()<<"好友添加失败";
+        }
+
+        break;
+    }
+    case ENUM_MSG_TYPE_ADD_FRIEND_REFUSE:
+    {
+
+        qDebug()<<"对象拒绝了好友请求";
+        char fromName[32];
+        char toName[32];
+        memcpy(fromName,pdu->caData,32);
+        memcpy(toName,pdu->caData+32,32);
+        PDU *respdu=mkPDU(0);
+        respdu->uiMsgType=ENUM_MSG_TYPE_ADD_FRIEND_REFUSE;
+        strncpy(respdu->caData,toName,32);//告诉申请者谁拒绝了
+        MyTcpServer::getInstance().resend(fromName,respdu);
+        free(respdu);
+        respdu=NULL;
+        break;
+    }
     default:
         break;
     }

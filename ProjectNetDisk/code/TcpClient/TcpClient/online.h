@@ -17,6 +17,9 @@ public:
     ~Online();
     void ShowUser(PDU *pdu);//在online界面中展示用户
 
+private slots:
+    void on_addNewFriend_pb_clicked();
+
 private:
     Ui::Online *ui;
 };

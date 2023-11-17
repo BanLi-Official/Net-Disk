@@ -22,6 +22,7 @@ public:
 
     static TcpClient &getInstance();//用单例模式获取tcpClient使其能够在任何时候调用其中的内容，比如：m_tcpSocket
     QTcpSocket &getTcpSocket();//将TCPSocket返回出去，方便调用，同时增强代码安全性
+    QString getLoginName();
 
 public slots://在Qt中，槽函数（Slot）是一种特殊的成员函数，用于响应信号（Signal）的发出。
              //槽函数可以被连接到一个或多个信号上，当信号被发出时，与之连接的槽函数会被自动调用，以响应信号的事件。
@@ -45,6 +46,7 @@ private:
     QString m_strIP; //服务器IP地址
     quint16 m_usPort;//服务器端口
     QTcpSocket m_tcpSocket; //网络连接对象，通过它连接服务器，同服务器进行数据交互
+    QString strLoginName;//存储登录的账户名称
 
 };
 #endif // TCPCLIENT_H

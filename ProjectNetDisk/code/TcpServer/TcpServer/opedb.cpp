@@ -149,3 +149,54 @@ int OpeDB::handlSearchUser(const char *name)
 
 
 }
+
+int OpeDB::handlAddFriend(const char *FriendName, const char *LoginName)
+{
+    if(FriendName==NULL || LoginName==NULL)
+    {
+        return -1;
+    }
+    QString sql=QString("select * from friend where (id=(select id from userInfo where name='%1') and friendid=(select id from userInfo where name='%2')) "
+                          "or (id=(select id from userInfo where name='%3') and friendid=(select id from userInfo where name='%4'))").arg(FriendName).arg(LoginName).arg(LoginName).arg(FriendName);
+    qDebug()<<sql;
+    QSqlQuery query;
+    query.exec(sql);
+    if(query.next())
+    {
+        return 0;//已经是好友了
+    }
+    else
+    {
+        QString getString=QString("select * from userInfo where name='%1'").arg(FriendName);
+        qDebug()<<"查找特定用户的SQL语句："<<getString;
+        QSqlQuery query;
+        query.exec(getString);
+        if(query.next())
+        {
+            int state=query.value(3).toInt();
+            if(state==1)
+            {
+                return 1;//用户在线
+            }
+            else
+            {
+                return 2;//用户不在线
+            }
+
+        }
+        else
+        {
+            qDebug()<<"用户在线状态未知";
+            return 3;
+        }
+    }
+}
+
+bool OpeDB::handlAddFriendToDataset(const char *FromName, const char *toName)
+{
+    QString sql=QString("insert into friend (id, friendid) values ((select id from userInfo where name='%1'),(select id from userInfo where name='%2'));").arg(FromName).arg(toName);
+    QSqlQuery query;
+    bool ret=query.exec(sql);
+    return ret;
+
+}

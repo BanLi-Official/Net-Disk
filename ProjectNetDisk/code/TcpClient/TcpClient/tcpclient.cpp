@@ -64,6 +64,11 @@ QTcpSocket &TcpClient::getTcpSocket()
     return m_tcpSocket;
 }
 
+QString TcpClient::getLoginName()
+{
+    return strLoginName;
+}
+
 void TcpClient::showConnect()//展示连接成功信息
 {
     QMessageBox::information(this,"连接服务器","连接服务器成功");
@@ -143,6 +148,57 @@ void TcpClient::resvMsg()
         }
         break;
     }
+    case ENUM_MSG_TYPE_ADD_FRIEND_REQUEST:
+    {
+        qDebug()<<"收到了来自服务器转发而来的好友请求消息";
+        char fromName[32];
+        memcpy(fromName,pdu->caData+32,32);
+        int ret=QMessageBox::information(this,"好友申请",QString("%1希望添加您为好友！").arg(fromName),QMessageBox::Yes,QMessageBox::No);
+        if(ret==QMessageBox::Yes)
+        {
+            PDU *addFriendPdu=mkPDU(0);
+            addFriendPdu->uiMsgType=ENUM_MSG_TYPE_ADD_FRIEND_AGGREE;
+            strncpy(addFriendPdu->caData,fromName,32);//请求人
+            strncpy(addFriendPdu->caData+32,strLoginName.toStdString().c_str(),32);//回复人
+            m_tcpSocket.write((char *)addFriendPdu,addFriendPdu->uiPDULen);
+            free(addFriendPdu);
+            addFriendPdu=NULL;
+            qDebug()<<"同意信息已发送";
+        }
+        else
+        {
+            PDU *addFriendPdu=mkPDU(0);
+            addFriendPdu->uiMsgType=ENUM_MSG_TYPE_ADD_FRIEND_REFUSE;
+            strncpy(addFriendPdu->caData,fromName,32);
+            strncpy(addFriendPdu->caData+32,strLoginName.toStdString().c_str(),32);//回复人
+            m_tcpSocket.write((char *)addFriendPdu,addFriendPdu->uiPDULen);
+            free(addFriendPdu);
+            addFriendPdu=NULL;
+            qDebug()<<"拒绝信息已发送";
+        }
+        break;
+    }
+    case ENUM_MSG_TYPE_ADD_FRIEND_RESPOND:
+    {
+        QMessageBox::information(this,"添加好友",pdu->caData);
+
+        break;
+    }
+    case ENUM_MSG_TYPE_ADD_FRIEND_SUCESS:
+    {
+        char toName[32];
+        memcpy(toName,pdu->caData,32);
+        QMessageBox::information(this,"添加好友",QString("%1同意了您的好友请求！").arg(toName));
+        break;
+
+    }
+    case ENUM_MSG_TYPE_ADD_FRIEND_REFUSE:
+    {
+        char toName[32];
+        memcpy(toName,pdu->caData,32);
+        QMessageBox::information(this,"添加好友",QString("%1拒绝了您的好友请求！").arg(toName));
+        break;
+    }
     default:
         break;
     }
@@ -183,6 +239,7 @@ void TcpClient::on_login_pb_clicked()
     QString strPwd=ui->pwd_le->text();
     if(!strName.isEmpty()&&!strPwd.isEmpty())
     {
+        strLoginName=strName;
         PDU *pdu=mkPDU(0);//创建一个登录请求的协议单元
         pdu->uiMsgType=ENUM_MSG_TYPE_LOGIN_REQUEST;
         strncpy(pdu->caData,strName.toStdString().c_str(),32);

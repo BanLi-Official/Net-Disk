@@ -15,6 +15,9 @@ public:
     //单例模式：它保证一个类只有一个实例，并提供一个全局访问点。
     static MyTcpServer &getInstance(); //公有的静态成员函数，用于获取唯一的实例
     void incomingConnection(qintptr socketDescriptor); //重新定义TCP server中的protect的虚函数，用于当有请求接入时给予反应
+    void resend(char *name,PDU *pdu);//转发消息给指定的用户
+
+
 
 
 public slots:

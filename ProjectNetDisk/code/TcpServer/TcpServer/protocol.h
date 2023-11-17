@@ -17,6 +17,12 @@ typedef unsigned int uint;
 #define SEARCH_USER_ONLINE "用户在线"
 #define SEARCH_USER_OFFLINE "用户不在线"
 
+#define UNKNOW_ERROR "未知错误"
+#define EXISTED_FRIEND "已经是好友了"
+#define ADD_FRIENDS_OFFLINE "好友不在线"
+#define ADD_FRIEND_NO_EXSIT "没有这个用户"
+
+
 
 enum ENUM_MSG_TYPE    //利用枚举类型，设置消息的类型
 {
@@ -29,6 +35,12 @@ enum ENUM_MSG_TYPE    //利用枚举类型，设置消息的类型
     ENUM_MSG_TYPE_All_ONLINE_RESPOND,//显示所有在线用户的回复
     ENUM_MSG_TYPE_SEARCH_USER_REQUEST,//搜索用户请求
     ENUM_MSG_TYPE_SEARCH_USER_RESPOND,//搜索用户的回复
+    ENUM_MSG_TYPE_ADD_FRIEND_REQUEST,//添加好友请求
+    ENUM_MSG_TYPE_ADD_FRIEND_RESPOND,//添加好友回复
+    ENUM_MSG_TYPE_ADD_FRIEND_AGGREE,//同意添加好友
+    ENUM_MSG_TYPE_ADD_FRIEND_REFUSE,//拒绝添加好友
+    ENUM_MSG_TYPE_ADD_FRIEND_SUCESS,//成功添加好友
+    ENUM_MSG_TYPE_ADD_FRIEND_DEFAULT,//添加好友失败
     ENUM_MSG_TYPE_MAX=0x00ffffff
 };
 

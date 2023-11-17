@@ -18,7 +18,24 @@ void MyTcpServer::incomingConnection(qintptr socketDescriptor)//重新定义TCP 
     MyTcpSocket *pTcpSocket=new MyTcpSocket;//新建一个MyTcpSocket，用于接收客户端连接而来的socket
     pTcpSocket->setSocketDescriptor(socketDescriptor);//将一个已有的套接字描述符与一个QTcpSocket对象关联起来，使得QTcpSocket对象可以使用该套接字进行网络通信。
     m_tcpSocketList.append(pTcpSocket);
-     connect(pTcpSocket,SIGNAL(offline(MyTcpSocket*)),this,SLOT(deleteScoket(MyTcpSocket*)));//将下线的信号与deleteScoket(MyTcpSocket *)函数关联起来
+    connect(pTcpSocket,SIGNAL(offline(MyTcpSocket*)),this,SLOT(deleteScoket(MyTcpSocket*)));//将下线的信号与deleteScoket(MyTcpSocket *)函数关联起来
+}
+
+void MyTcpServer::resend(char *name, PDU *pdu)
+{
+    if(name==NULL || pdu==NULL)
+    {
+        return ;
+    }
+    QString FriendName=name;
+    for(int i=0;i<m_tcpSocketList.size();i++)
+    {
+        if(FriendName== m_tcpSocketList.at(i)->getName())
+        {
+            m_tcpSocketList.at(i)->write((char *)pdu,pdu->uiPDULen);
+            break;
+        }
+    }
 }
 
 void MyTcpServer::deleteScoket(MyTcpSocket *mysocket)
