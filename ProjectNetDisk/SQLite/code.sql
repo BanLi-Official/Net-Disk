@@ -26,8 +26,12 @@ select * from userInfo where online='1'
 select * from userInfo where name='1'
 
 
-insert into friend  values (1,2);
+insert into friend  values (12,1);
 
+
+
+select friendid from friend where id='1';
+select name from userInfo where id in(select friendid from friend where id=(select id from userInfo where name='jack') or friendid='1') and online='1'
 
 select * from friend where (id=(select id from userInfo where name='jack') and friendid=(select id from userInfo where name='Elysia')) or (id=(select id from userInfo where name='Elysia') and friendid=(select id from userInfo where name='jack'))
 

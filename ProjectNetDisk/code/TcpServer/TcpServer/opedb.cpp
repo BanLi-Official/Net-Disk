@@ -200,3 +200,36 @@ bool OpeDB::handlAddFriendToDataset(const char *FromName, const char *toName)
     return ret;
 
 }
+
+QStringList OpeDB::handleFlushFriend(const char *name)
+{
+    QStringList strFriendList;
+    strFriendList.clear();
+    if(name==NULL)
+    {
+        return strFriendList;
+    }
+    QString sql=QString("select name from userInfo where id in(select friendid from friend where id=(select id from userInfo where name='%1')) and online='1'").arg(name);
+    QSqlQuery query;
+    query.exec(sql);
+    //qDebug()<<"在线的好友列表";
+    while(query.next())
+    {
+        strFriendList.append(query.value(0).toString());
+        //qDebug()<<query.value(0).toString();
+
+    }
+
+    QString sql2=QString("select name from userInfo where id in(select id from friend where friendid=(select id from userInfo where name='%1')) and online='1'").arg(name);
+    QSqlQuery query2;
+    query2.exec(sql2);
+    while(query2.next())
+    {
+        strFriendList.append(query2.value(0).toString());
+        //qDebug()<<query2.value(0).toString();
+
+    }
+
+    return strFriendList;
+
+}

@@ -46,6 +46,7 @@ Friend::Friend(QWidget *parent)
 
     connect(m_pShowOnlineUsrPB,SIGNAL(clicked(bool)),this,SLOT(ShowOnline()));//将展示在线用户的按钮与展示在线用户的函数关联起来
     connect(m_pSearchUsrPB,SIGNAL(clicked(bool)),this,SLOT(SearchUser()));//将用户搜索按钮与用户搜索功能关联起来
+    connect(m_pFlushFriendPB,SIGNAL(clicked(bool)),this,SLOT(flushFriend()));//将刷新好友列表与函数关联起来
 
 }
 
@@ -57,6 +58,25 @@ void Friend::ShowAllOnlineUsr(PDU *pdu)
     }
 
     online->ShowUser(pdu);
+}
+
+void Friend::updateFriendList(PDU *pdu)
+{
+    if(pdu==NULL)
+    {
+        return;
+    }
+
+    m_pFriendListWidget->clear();
+
+    uint uiSize=pdu->uiMsgLen/32;
+    char caName[32]={'\0'};
+    for (uint i=0;i<uiSize;i++)
+    {
+        memcpy(caName,(char *)(pdu->caMsg)+i*32,32);
+        m_pFriendListWidget->addItem(caName);
+    }
+
 }
 
 void Friend::ShowOnline()
@@ -95,4 +115,15 @@ void Friend::SearchUser()
 
 
     }
+}
+
+void Friend::flushFriend()
+{
+    QString strName=TcpClient::getInstance().getLoginName();
+    PDU *pdu=mkPDU(0);
+    pdu->uiMsgType=ENUM_MSG_TYPE_FLUSH_FRIEND_REQUEST;
+    memcpy(pdu->caData,strName.toStdString().c_str(),strName.size());
+    TcpClient::getInstance().getTcpSocket().write((char *)pdu,pdu->uiPDULen);
+    free(pdu);
+    pdu=NULL;
 }

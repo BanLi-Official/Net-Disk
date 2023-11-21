@@ -260,6 +260,24 @@ void MyTcpSocket::recvMsg()//当有读信号出来的时候，就调用这个函
         respdu=NULL;
         break;
     }
+    case ENUM_MSG_TYPE_FLUSH_FRIEND_REQUEST:
+    {
+        char name[32];
+        memcpy(name,pdu->caData,32);
+        QStringList strFriendList=OpeDB::getInstance().handleFlushFriend(name);
+        //qDebug()<<"strFriendList="<<strFriendList;
+        uint uiMsgLen=strFriendList.size()*32;
+        PDU *resPdu=mkPDU(uiMsgLen);
+        resPdu->uiMsgType=ENUM_MSG_TYPE_FLUSH_FRIEND_RESPOND;
+        for(int i=0;i<strFriendList.size();i++)
+        {
+            memcpy((char *)(resPdu->caMsg)+i*32,strFriendList.at(i).toStdString().c_str(),strFriendList.at(i).size());
+        }
+        write((char *)resPdu,resPdu->uiPDULen);
+        free(resPdu);
+        resPdu=NULL;
+        break;
+    }
     default:
         break;
     }
