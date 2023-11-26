@@ -278,6 +278,59 @@ void MyTcpSocket::recvMsg()//当有读信号出来的时候，就调用这个函
         resPdu=NULL;
         break;
     }
+    case ENUM_MSG_TYPE_DELETE_FRIEND_REQUEST:
+    {
+        char myName[32];
+        char FriendName[32];
+        memcpy(myName,pdu->caData,32);
+        memcpy(FriendName,pdu->caData+32,32);
+
+
+
+        bool ret=OpeDB::getInstance().handlDelFriend(myName,FriendName);
+        PDU *pdu=mkPDU(0);
+        pdu->uiMsgType=ENUM_MSG_TYPE_DELETE_FRIEND_RESPOND;
+        if(ret)
+        {
+            strcpy(pdu->caData,DELETE_FRIEND_OK);
+        }
+        else
+        {
+            strcpy(pdu->caData,DELETE_FRIEND_FAILED);
+        }
+        write((char *)pdu,pdu->uiPDULen);
+        free(pdu);
+        pdu=NULL;
+
+
+        bool is_online=OpeDB::getInstance().handlCheckOnline(FriendName);
+        if(!is_online)
+        {
+
+            //不在线，不发送
+        }
+        else //在线 发送通知
+        {
+            PDU *pdu=mkPDU(0);
+            pdu->uiMsgType=ENUM_MSG_TYPE_DELETE_FRIEND_IMFORE;
+            memcpy(pdu->caData,myName,32);
+            MyTcpServer::getInstance().resend(FriendName,pdu);
+            free(pdu);
+            pdu=NULL;
+
+
+        }
+
+
+        break;
+    }
+    case ENUM_MSG_TYPE_PRIVATE_CHAT_REQUEST:
+    {
+        char m_ChatName[32];
+        memcpy(m_ChatName,pdu->caData,32);
+        MyTcpServer::getInstance().resend(m_ChatName,pdu);
+        break;
+    }
     default:
         break;
     }

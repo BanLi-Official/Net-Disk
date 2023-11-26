@@ -41,9 +41,6 @@ public:
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName("horizontalLayout");
         online_listwidget = new QListWidget(Online);
-        new QListWidgetItem(online_listwidget);
-        new QListWidgetItem(online_listwidget);
-        new QListWidgetItem(online_listwidget);
         online_listwidget->setObjectName("online_listwidget");
 
         horizontalLayout->addWidget(online_listwidget);
@@ -81,17 +78,6 @@ public:
     void retranslateUi(QWidget *Online)
     {
         Online->setWindowTitle(QCoreApplication::translate("Online", "Form", nullptr));
-
-        const bool __sortingEnabled = online_listwidget->isSortingEnabled();
-        online_listwidget->setSortingEnabled(false);
-        QListWidgetItem *___qlistwidgetitem = online_listwidget->item(0);
-        ___qlistwidgetitem->setText(QCoreApplication::translate("Online", "1111", nullptr));
-        QListWidgetItem *___qlistwidgetitem1 = online_listwidget->item(1);
-        ___qlistwidgetitem1->setText(QCoreApplication::translate("Online", "111111", nullptr));
-        QListWidgetItem *___qlistwidgetitem2 = online_listwidget->item(2);
-        ___qlistwidgetitem2->setText(QCoreApplication::translate("Online", "2222", nullptr));
-        online_listwidget->setSortingEnabled(__sortingEnabled);
-
         addNewFriend_pb->setText(QCoreApplication::translate("Online", "\346\267\273\345\212\240\345\245\275\345\217\213", nullptr));
     } // retranslateUi
 

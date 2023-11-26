@@ -233,3 +233,55 @@ QStringList OpeDB::handleFlushFriend(const char *name)
     return strFriendList;
 
 }
+
+bool OpeDB::handlDelFriend(const char *MyName, const char *FriendName)
+{
+    if(NULL==MyName||NULL==FriendName)
+    {
+        return false;
+    }
+
+
+    QString sql2=QString("delete from friend where "
+                           "(id=(select id from userInfo where name='%1') and friendid=(select id from userInfo where name='%2')) or "
+                           "(id=(select id from userInfo where name='%3') and friendid=(select id from userInfo where name='%4'))")
+                       .arg(MyName).arg(FriendName).arg(FriendName).arg(MyName);
+    QSqlQuery query2;
+    qDebug()<<sql2;
+    bool ret=query2.exec(sql2);
+
+    if(ret )
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+
+}
+
+bool OpeDB::handlCheckOnline(const char *Name)
+{
+    if(Name==NULL)
+    {
+        return false;
+    }
+
+    QString sql=QString("select online from userInfo where name='%1';").arg(Name);
+    QSqlQuery query;
+    query.exec(sql);
+    if(query.next())
+    {
+        if(query.value(0)==1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    return false;
+
+}

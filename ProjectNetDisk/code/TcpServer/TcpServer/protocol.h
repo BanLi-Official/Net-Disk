@@ -22,6 +22,9 @@ typedef unsigned int uint;
 #define ADD_FRIENDS_OFFLINE "好友不在线"
 #define ADD_FRIEND_NO_EXSIT "没有这个用户"
 
+#define DELETE_FRIEND_OK "成功删除好友"
+#define DELETE_FRIEND_FAILED "删除好友失败"
+#define DELETE_FRIEND_NOT_ONLINE "删除好友不在线"
 
 
 enum ENUM_MSG_TYPE    //利用枚举类型，设置消息的类型
@@ -43,6 +46,11 @@ enum ENUM_MSG_TYPE    //利用枚举类型，设置消息的类型
     ENUM_MSG_TYPE_ADD_FRIEND_DEFAULT,//添加好友失败
     ENUM_MSG_TYPE_FLUSH_FRIEND_REQUEST,//刷新好友请求
     ENUM_MSG_TYPE_FLUSH_FRIEND_RESPOND,//刷新好友的回复
+    ENUM_MSG_TYPE_DELETE_FRIEND_REQUEST,//删除好友请求
+    ENUM_MSG_TYPE_DELETE_FRIEND_RESPOND,//删除好友的回复
+    ENUM_MSG_TYPE_DELETE_FRIEND_IMFORE,//通知用户被删除好友
+    ENUM_MSG_TYPE_PRIVATE_CHAT_REQUEST,//与好友私聊的请求
+    ENUM_MSG_TYPE_PRIVATE_CHAT_RESPOND,//与好友私聊的回复
     ENUM_MSG_TYPE_MAX=0x00ffffff
 };
 

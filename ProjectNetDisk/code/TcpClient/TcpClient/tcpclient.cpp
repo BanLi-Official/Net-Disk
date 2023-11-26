@@ -5,6 +5,7 @@
 #include "QMessageBox"
 #include "QHostAddress"
 #include "protocol.h"
+#include "privatechat.h"
 
 TcpClient::TcpClient(QWidget *parent)
     : QWidget(parent)
@@ -202,6 +203,41 @@ void TcpClient::resvMsg()
     case ENUM_MSG_TYPE_FLUSH_FRIEND_RESPOND:
     {
         OpeWidget::getInstance().getFriend()->updateFriendList(pdu);
+        break;
+    }
+    case ENUM_MSG_TYPE_DELETE_FRIEND_RESPOND:
+    {
+        if(0==strcmp(pdu->caData,DELETE_FRIEND_OK))
+        {
+            QMessageBox::information(this,"提示","已成功解除好友关系！");
+        }
+        else if(0==strcmp(pdu->caData,DELETE_FRIEND_FAILED))
+        {
+            QMessageBox::information(this,"提示","删除好友失败");
+        }
+        break;
+    }
+    case ENUM_MSG_TYPE_DELETE_FRIEND_IMFORE:
+    {
+        char FriendName[32];
+        strncpy(FriendName,pdu->caData,32);
+        QString imfor=QString("%1解除了与您的好友关系").arg(FriendName);
+        QMessageBox::information(this,"提示",imfor);
+        break;
+    }
+    case ENUM_MSG_TYPE_PRIVATE_CHAT_REQUEST:
+    {
+        if(PrivateChat::getInstance().isHidden())
+        {
+            char FromName[32];
+            memcpy(FromName,pdu->caData+32,32);
+            QString StrFromName=FromName;
+            PrivateChat::getInstance().setChatName(StrFromName);
+            PrivateChat::getInstance().show();
+        }
+        PrivateChat::getInstance().updateMsg(pdu);
+
+
         break;
     }
     default:

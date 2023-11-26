@@ -19,6 +19,7 @@ public:
     void ShowAllOnlineUsr(PDU *pdu);
     void updateFriendList(PDU *pdu);//更新好友列表
 
+
     QString m_strName;//临时存储的名字
 
 signals:
@@ -27,6 +28,8 @@ public slots:
     void ShowOnline();//展示好友界面
     void SearchUser();//查找用户
     void flushFriend();//刷新好友列表
+    void delFriend();//删除好友列表
+    void privateChat();//好友私聊
 
 private:
     QTextEdit *m_pShowMsgTE;//用于展示信息
@@ -38,7 +41,7 @@ private:
     QPushButton *m_pShowOnlineUsrPB;//展示好友信息按钮
     QPushButton *m_pSearchUsrPB;//查找用户按钮
     QPushButton *m_pMsgSendPB;//查找用户按钮
-    QPushButton *m_pPrivateChatPB;//查找用户按钮
+    QPushButton *m_pPrivateChatPB;//用户私聊按钮
 
     Online *online;//在线用户
 

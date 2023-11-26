@@ -43,3 +43,12 @@ select * from friend where (id=(select id from userInfo where name='Elysia') and
 insert into friend (id, friendid) values ((select id from userInfo where name='Elysia'),(select id from userInfo where name='1'));
 
 delete from  friend where id =2;
+
+select id from userInfo where name='1'
+
+delete from friend where (id=(select id from userInfo where name='jack') and friendid=(select id from userInfo where name='2')) or (id= (select id from userInfo where name='2') and friendid=(select id from userInfo where name='jack'))
+
+select online from userInfo where name='jack';
+
+
+delete from friend where (id=(select id from userInfo where name='jack') and friendid=(select id from userInfo where name='3')) or (id=(select id from userInfo where name='3') and friendid=(select id from userInfo where name='jack'))

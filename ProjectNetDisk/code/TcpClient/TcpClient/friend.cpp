@@ -3,6 +3,8 @@
 #include "tcpclient.h"
 #include<QInputDialog>
 #include <QDebug>
+#include <QMessageBox>
+#include "privatechat.h"
 
 Friend::Friend(QWidget *parent)
     : QWidget{parent}
@@ -13,7 +15,7 @@ Friend::Friend(QWidget *parent)
 
     m_pDelFriendPB=new QPushButton("删除好友");//删除好友按钮
     m_pFlushFriendPB=new QPushButton("刷新好友");//刷新好友信息按钮
-    m_pShowOnlineUsrPB=new QPushButton("显示在线好友");//展示好友信息按钮
+    m_pShowOnlineUsrPB=new QPushButton("显示在线用户");//展示好友信息按钮
     m_pSearchUsrPB=new QPushButton("查找用户");//查找用户按钮
     m_pMsgSendPB=new QPushButton("发送信息");//发送信息按钮
     m_pPrivateChatPB=new QPushButton("私聊好友");//私聊按钮
@@ -47,6 +49,8 @@ Friend::Friend(QWidget *parent)
     connect(m_pShowOnlineUsrPB,SIGNAL(clicked(bool)),this,SLOT(ShowOnline()));//将展示在线用户的按钮与展示在线用户的函数关联起来
     connect(m_pSearchUsrPB,SIGNAL(clicked(bool)),this,SLOT(SearchUser()));//将用户搜索按钮与用户搜索功能关联起来
     connect(m_pFlushFriendPB,SIGNAL(clicked(bool)),this,SLOT(flushFriend()));//将刷新好友列表与函数关联起来
+    connect(m_pDelFriendPB,SIGNAL(clicked(bool)),this,SLOT(delFriend()));//将删除好友函数与按钮关联起来
+    connect(m_pPrivateChatPB,SIGNAL(clicked(bool)),this,SLOT(privateChat()));//关联私聊按钮
 
 }
 
@@ -126,4 +130,42 @@ void Friend::flushFriend()
     TcpClient::getInstance().getTcpSocket().write((char *)pdu,pdu->uiPDULen);
     free(pdu);
     pdu=NULL;
+}
+
+void Friend::delFriend()
+{
+    if(NULL!=m_pFriendListWidget->currentItem())
+    {
+        QString strFriendName=m_pFriendListWidget->currentItem()->text();
+        QString strMyName=TcpClient::getInstance().getLoginName();
+        PDU *pdu=mkPDU(0);
+        pdu->uiMsgType=ENUM_MSG_TYPE_DELETE_FRIEND_REQUEST;
+        memcpy(pdu->caData,strMyName.toStdString().c_str(),strMyName.size());
+        memcpy(pdu->caData+32,strFriendName.toStdString().c_str(),strFriendName.size());
+
+        TcpClient::getInstance().getTcpSocket().write((char *)pdu,pdu->uiPDULen);
+        free(pdu);
+        pdu=NULL;
+    }
+    else
+    {
+        QMessageBox::information(this,"提示","请选择要删除的好友");
+    }
+}
+
+void Friend::privateChat()
+{
+    if(NULL!=m_pFriendListWidget->currentItem())
+    {
+        QString strChatName=m_pFriendListWidget->currentItem()->text();
+        PrivateChat::getInstance().setChatName(strChatName);
+        if(PrivateChat::getInstance().isHidden())
+        {
+            PrivateChat::getInstance().show();
+        }
+    }
+    else
+    {
+        QMessageBox::information(this,"提示","请选择要私聊的好友");
+    }
 }

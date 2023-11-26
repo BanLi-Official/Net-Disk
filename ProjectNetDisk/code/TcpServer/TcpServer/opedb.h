@@ -24,6 +24,8 @@ public:
     int handlAddFriend(const char *FriendName,const char *LoginName);//添加好友操作
     bool handlAddFriendToDataset(const char *FromName,const char *toName);//添加交好友信息到数据库
     QStringList handleFlushFriend(const char *name);//根据用户名找到所有的好友
+    bool handlDelFriend(const char *MyName,const char *FriendName);//删除好友记录
+    bool handlCheckOnline(const char *Name);//确定对方是否在线
 
 signals:
 
