@@ -3,6 +3,7 @@
 
 #include <QTcpSocket>
 #include "protocol.h"
+#include <QDir>
 
 class MyTcpSocket : public QTcpSocket  //包装一个TCPSocket用于区分谁发来的socket
 {

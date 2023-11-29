@@ -27,6 +27,7 @@ public:
     bool handlDelFriend(const char *MyName,const char *FriendName);//删除好友记录
     bool handlCheckOnline(const char *Name);//确定对方是否在线
 
+
 signals:
 
 private:

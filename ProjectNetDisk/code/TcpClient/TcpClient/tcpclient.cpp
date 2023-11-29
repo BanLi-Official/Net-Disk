@@ -6,6 +6,7 @@
 #include "QHostAddress"
 #include "protocol.h"
 #include "privatechat.h"
+#include "tools.h"
 
 TcpClient::TcpClient(QWidget *parent)
     : QWidget(parent)
@@ -14,6 +15,7 @@ TcpClient::TcpClient(QWidget *parent)
     ui->setupUi(this);
     resize(500,250);
     loadConfig();
+
     connect(&m_tcpSocket,SIGNAL(connected()),this,SLOT(showConnect()));//将连接发出的信息号与信号处理结合起来
     connect(&m_tcpSocket,SIGNAL(readyRead()),this,SLOT(resvMsg()));//将准备好读取信息与信息接收处理连接起来
 
@@ -70,6 +72,11 @@ QString TcpClient::getLoginName()
     return strLoginName;
 }
 
+QString TcpClient::getCurrentPath()
+{
+    return str_CurPath;
+}
+
 void TcpClient::showConnect()//展示连接成功信息
 {
     QMessageBox::information(this,"连接服务器","连接服务器成功");
@@ -112,6 +119,7 @@ void TcpClient::resvMsg()
     {
         if(0==strcmp(pdu->caData,LOGIN_OK))
         {
+            str_CurPath=QString("./UserFile/%1").arg(TcpClient::getInstance().getLoginName());
             QMessageBox::information(this,"登录","登录成功！");
             OpeWidget::getInstance().show();
             this->hide();
@@ -240,9 +248,30 @@ void TcpClient::resvMsg()
 
         break;
     }
+    case ENUM_MSG_TYPE_QUN_CHAT_REQUEST:
+    {
+        OpeWidget::getInstance().getFriend()->updateM_pShowMsgTE(pdu);
+        break;
+    }
+    case ENUM_MSG_TYPE_CREATE_FILE_RESPOND:
+    {
+        //qDebug()<<"收到了来自服务器的respdu：";
+        //Tools::getInstance().ShowPDU(pdu);
+        QString str=QString("%1").arg(pdu->caData);
+        QMessageBox::information(this,"新建文件夹",str);
+        break;
+    }
+    case ENUM_MSG_TYPE_FLUSH_FILE_RESPOND:
+    {
+        qDebug()<<"收到了来自服务器的respdu：";
+        //Tools::getInstance().ShowPDU(pdu);
+        OpeWidget::getInstance().getNetDisk()->updateFileList(pdu);
+        break;
+    }
     default:
         break;
     }
+
 
     free(pdu);
     pdu=NULL;

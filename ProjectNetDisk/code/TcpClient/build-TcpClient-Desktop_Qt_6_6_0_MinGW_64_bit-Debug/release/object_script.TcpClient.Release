@@ -1,4 +1,4 @@
-release/book.o
+release/NetDisk.o
 release/friend.o
 release/main.o
 release/online.o
@@ -6,8 +6,10 @@ release/opewidget.o
 release/privatechat.o
 release/protocol.o
 release/tcpclient.o
+release/tools.o
+release/qrc_FileType.o
 release/qrc_config.o
-release/moc_book.o
+release/moc_NetDisk.o
 release/moc_friend.o
 release/moc_online.o
 release/moc_opewidget.o

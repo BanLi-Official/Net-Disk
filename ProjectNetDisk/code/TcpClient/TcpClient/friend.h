@@ -18,6 +18,7 @@ public:
     explicit Friend(QWidget *parent = nullptr);
     void ShowAllOnlineUsr(PDU *pdu);
     void updateFriendList(PDU *pdu);//更新好友列表
+    void updateM_pShowMsgTE(PDU *pdu);//更新群聊消息
 
 
     QString m_strName;//临时存储的名字
@@ -30,6 +31,7 @@ public slots:
     void flushFriend();//刷新好友列表
     void delFriend();//删除好友列表
     void privateChat();//好友私聊
+    void groupChat();//好友群聊
 
 private:
     QTextEdit *m_pShowMsgTE;//用于展示信息

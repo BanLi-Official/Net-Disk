@@ -52,3 +52,8 @@ select online from userInfo where name='jack';
 
 
 delete from friend where (id=(select id from userInfo where name='jack') and friendid=(select id from userInfo where name='3')) or (id=(select id from userInfo where name='3') and friendid=(select id from userInfo where name='jack'))
+
+
+
+delete from friend;
+delete from userInfo;

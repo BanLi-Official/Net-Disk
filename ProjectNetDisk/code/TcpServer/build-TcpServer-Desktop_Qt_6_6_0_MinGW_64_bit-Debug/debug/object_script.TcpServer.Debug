@@ -4,6 +4,7 @@ debug/mytcpsocket.o
 debug/opedb.o
 debug/protocol.o
 debug/tcpserver.o
+debug/tools.o
 debug/qrc_config.o
 debug/moc_mytcpserver.o
 debug/moc_mytcpsocket.o

@@ -24,6 +24,12 @@ typedef unsigned int uint;
 #define DELETE_FRIEND_OK "成功删除好友"
 #define DELETE_FRIEND_FAILED "删除好友失败"
 
+#define CREATE_FILE_SUCESS "创建文件夹成功"
+#define CREATE_FILE_EXISTED "创建文件夹已存在"
+#define CREATE_FILE_NO_PATH "当前文件夹路径不存在"
+#define CREATE_FILE_FAILED_UNKNOWN "创建文件夹因未知原因失败"
+
+
 
 enum ENUM_MSG_TYPE    //利用枚举类型，设置消息的类型
 {
@@ -49,10 +55,23 @@ enum ENUM_MSG_TYPE    //利用枚举类型，设置消息的类型
     ENUM_MSG_TYPE_DELETE_FRIEND_IMFORE,//通知用户被删除好友
     ENUM_MSG_TYPE_PRIVATE_CHAT_REQUEST,//与好友私聊的请求
     ENUM_MSG_TYPE_PRIVATE_CHAT_RESPOND,//与好友私聊的回复
-
+    ENUM_MSG_TYPE_QUN_CHAT_REQUEST,//与好友群聊的请求
+    ENUM_MSG_TYPE_QUN_CHAT_RESPOND,//与好友群聊的回复
+    ENUM_MSG_TYPE_CREATE_FILE_REQUEST,//创建文件夹的请求
+    ENUM_MSG_TYPE_CREATE_FILE_RESPOND,//创建文件夹的回复
+    ENUM_MSG_TYPE_FLUSH_FILE_REQUEST,//刷新文件夹的请求
+    ENUM_MSG_TYPE_FLUSH_FILE_RESPOND,//刷新文件夹的回复
 
     ENUM_MSG_TYPE_MAX=0x00ffffff
 };
+
+struct FileInfo
+{
+    char caFileName[32];//文件名字
+    int iFileType;//文件类型
+};
+
+
 
 struct PDU   //协议数据单元的结构体
 {

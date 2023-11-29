@@ -21,7 +21,7 @@ void MyTcpServer::incomingConnection(qintptr socketDescriptor)//重新定义TCP 
     connect(pTcpSocket,SIGNAL(offline(MyTcpSocket*)),this,SLOT(deleteScoket(MyTcpSocket*)));//将下线的信号与deleteScoket(MyTcpSocket *)函数关联起来
 }
 
-void MyTcpServer::resend(char *name, PDU *pdu)
+void MyTcpServer::resend(const char *name, PDU *pdu)
 {
     if(name==NULL || pdu==NULL)
     {

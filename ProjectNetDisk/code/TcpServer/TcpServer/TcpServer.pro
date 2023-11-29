@@ -14,14 +14,16 @@ SOURCES += \
     mytcpsocket.cpp \
     opedb.cpp \
     protocol.cpp \
-    tcpserver.cpp
+    tcpserver.cpp \
+    tools.cpp
 
 HEADERS += \
     mytcpserver.h \
     mytcpsocket.h \
     opedb.h \
     protocol.h \
-    tcpserver.h
+    tcpserver.h \
+    tools.h
 
 FORMS += \
     tcpserver.ui

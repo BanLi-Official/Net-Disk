@@ -51,6 +51,7 @@ Friend::Friend(QWidget *parent)
     connect(m_pFlushFriendPB,SIGNAL(clicked(bool)),this,SLOT(flushFriend()));//将刷新好友列表与函数关联起来
     connect(m_pDelFriendPB,SIGNAL(clicked(bool)),this,SLOT(delFriend()));//将删除好友函数与按钮关联起来
     connect(m_pPrivateChatPB,SIGNAL(clicked(bool)),this,SLOT(privateChat()));//关联私聊按钮
+    connect(m_pMsgSendPB,SIGNAL(clicked(bool)),this,SLOT(groupChat()));//关联群聊按钮
 
 }
 
@@ -81,6 +82,14 @@ void Friend::updateFriendList(PDU *pdu)
         m_pFriendListWidget->addItem(caName);
     }
 
+}
+
+void Friend::updateM_pShowMsgTE(PDU *pdu)
+{
+    char FromName[32];
+    memcpy(FromName,pdu->caData,32);
+    QString data_str=QString("%1对你说：\n %2 \n\n").arg(FromName).arg(QString::fromUtf8((char *)pdu->caMsg));
+    m_pShowMsgTE->append(data_str);
 }
 
 void Friend::ShowOnline()
@@ -167,5 +176,25 @@ void Friend::privateChat()
     else
     {
         QMessageBox::information(this,"提示","请选择要私聊的好友");
+    }
+}
+
+void Friend::groupChat()
+{
+    QString str=m_pInputMsgLE->text();
+    if(str.isEmpty())
+    {
+        QMessageBox::information(this,"提示","请输入你想发送的内容！");
+    }
+    else
+    {
+        QString FromName=TcpClient::getInstance().getLoginName();
+        PDU *pdu=mkPDU(str.toUtf8().size()+1);
+        pdu->uiMsgType=ENUM_MSG_TYPE_QUN_CHAT_REQUEST;
+        memcpy(pdu->caData,FromName.toStdString().c_str(),32);
+        strcpy((char *)pdu->caMsg,str.toStdString().c_str());
+        TcpClient::getInstance().getTcpSocket().write((char *)pdu,pdu->uiPDULen);
+        free(pdu);
+        pdu=NULL;
     }
 }

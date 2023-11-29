@@ -9,23 +9,25 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    book.cpp \
+    NetDisk.cpp \
     friend.cpp \
     main.cpp \
     online.cpp \
     opewidget.cpp \
     privatechat.cpp \
     protocol.cpp \
-    tcpclient.cpp
+    tcpclient.cpp \
+    tools.cpp
 
 HEADERS += \
-    book.h \
+    NetDisk.h \
     friend.h \
     online.h \
     opewidget.h \
     privatechat.h \
     protocol.h \
-    tcpclient.h
+    tcpclient.h \
+    tools.h
 
 FORMS += \
     online.ui \
@@ -38,4 +40,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
+    FileType.qrc \
     config.qrc

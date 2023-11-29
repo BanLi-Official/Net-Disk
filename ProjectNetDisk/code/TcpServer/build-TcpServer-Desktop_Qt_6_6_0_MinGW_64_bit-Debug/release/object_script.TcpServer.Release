@@ -4,6 +4,7 @@ release/mytcpsocket.o
 release/opedb.o
 release/protocol.o
 release/tcpserver.o
+release/tools.o
 release/qrc_config.o
 release/moc_mytcpserver.o
 release/moc_mytcpsocket.o

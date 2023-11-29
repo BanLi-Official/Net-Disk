@@ -3,6 +3,9 @@
 #include "opedb.h"
 #include "protocol.h"
 #include "mytcpserver.h"
+#include "tools.h"
+#include <QDir>
+#include <QFileInfoList>
 
 MyTcpSocket::MyTcpSocket(QObject *parent)
     : QTcpSocket{parent}
@@ -56,6 +59,8 @@ void MyTcpSocket::recvMsg()//当有读信号出来的时候，就调用这个函
             //respdu->caData=REGIST_OK;  这样不安全，放入的REGIST_OK是地址常量，而不是将数据实际内容放入其中
             strcpy(respdu->caData,REGIST_OK);//这种赋值方法是将一个字符串常量的内容复制到respdu->caData指向的内存空间中，这样做是安全的，因为复制后的字符串是可写的，后续代码可以修改它。
             qDebug()<<"注册成功！";
+            QDir dir;
+            dir.mkdir(QString("./UserFile/%1").arg(name));
         }
         else
         {
@@ -331,6 +336,108 @@ void MyTcpSocket::recvMsg()//当有读信号出来的时候，就调用这个函
         MyTcpServer::getInstance().resend(m_ChatName,pdu);
         break;
     }
+    case ENUM_MSG_TYPE_QUN_CHAT_REQUEST:
+    {
+        //qDebug()<<"收到了群聊请求";
+        //for(找对象){转发}
+        char FromName[32];
+        memcpy(FromName,pdu->caData,32);
+        QStringList allFriend=OpeDB::getInstance().handleFlushFriend(FromName);
+        for(int i=0;i<allFriend.size();i++)
+        {
+            MyTcpServer::getInstance().resend(allFriend.at(i).toStdString().c_str(),pdu);
+            //qDebug()<<"已转发给用户："<<allFriend.at(i);
+        }
+        break;
+    }
+    case ENUM_MSG_TYPE_CREATE_FILE_REQUEST:
+    {
+        //qDebug()<<"收到了来自客户端的新建文件夹请求";
+        //Tools::getInstance().ShowPDU(pdu);
+        QString curPath=QString("%1").arg((char *)(pdu->caMsg));
+        QDir dirOpe;
+        bool ret=dirOpe.exists(curPath);
+        //qDebug()<<"curPath="<<curPath;
+        PDU *resPdu=mkPDU(0);
+        resPdu->uiMsgType=ENUM_MSG_TYPE_CREATE_FILE_RESPOND;
+        if(ret)//该地址存在
+        {
+            char caNewDir[32];
+            memcpy(caNewDir,pdu->caData+32,32);
+            QString newPath=curPath+"/"+QString(caNewDir);
+            qDebug()<<"需要创建的新的地址为："<<newPath;
+            ret=dirOpe.exists(newPath);
+            if(ret)//需要创建的新地址已经存在了
+            {
+                strcpy(resPdu->caData,CREATE_FILE_EXISTED);
+            }
+            else//开始创建文件夹
+            {
+                ret=dirOpe.mkdir(newPath);
+                if(ret)//注册成功
+                {
+                    strcpy(resPdu->caData,CREATE_FILE_SUCESS);
+                }
+                else//注册失败
+                {
+                    strcpy(resPdu->caData,CREATE_FILE_FAILED_UNKNOWN);
+                }
+            }
+        }
+        else//该地址不存在
+        {
+            strcpy(resPdu->caData,CREATE_FILE_NO_PATH);
+        }
+
+        write((char *)resPdu,resPdu->uiPDULen);
+        free(resPdu);
+        resPdu=NULL;
+
+
+        break;
+    }
+    case ENUM_MSG_TYPE_FLUSH_FILE_REQUEST:
+    {
+        qDebug()<<"收到了来自客户端的请求：";
+        Tools::getInstance().ShowPDU(pdu);
+        char *curPath=new char[pdu->uiMsgLen];
+        memcpy(curPath,pdu->caMsg,pdu->uiMsgLen);
+        QDir dir(curPath);
+        QFileInfoList fileInfoList=dir.entryInfoList();
+        int FileSize=fileInfoList.size();
+        PDU *respdu=mkPDU(sizeof(FileInfo)*(FileSize-2));
+        respdu->uiMsgType=ENUM_MSG_TYPE_FLUSH_FILE_RESPOND;
+        FileInfo *pFileInfo=NULL;
+        QString strFileName;
+        int undo=0;
+        for(int i=0;i<fileInfoList.size();i++)
+        {
+
+            if(QString(".")==fileInfoList.at(i).fileName()||QString("..")==fileInfoList.at(i).fileName())
+            {
+                undo++;
+                continue;
+            }
+            pFileInfo=(FileInfo*)(respdu->caMsg)+i-undo;
+            strFileName=fileInfoList.at(i).fileName();
+            memcpy(pFileInfo->caFileName,strFileName.toStdString().c_str(),strFileName.toUtf8().size());
+            if(fileInfoList[i].isDir())
+            {
+                pFileInfo->iFileType=0;//文件夹类型
+            }
+            else
+            {
+                pFileInfo->iFileType=1; //文件类型
+
+            }
+
+        }
+        write((char *)respdu,respdu->uiPDULen);
+        free(respdu);
+        respdu=NULL;
+        break;
+    }
+
     default:
         break;
     }
