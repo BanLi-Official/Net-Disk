@@ -520,7 +520,62 @@ void MyTcpSocket::recvMsg()//当有读信号出来的时候，就调用这个函
 
         break;
     }
+    case ENUM_MSG_TYPE_INTO_FILE_REQUEST:
+    {
+        //qDebug()<<"收到客户端发来的请求，内容如下";
+        //Tools::getInstance().ShowPDU(pdu);
+        char DirName[32];  //文件夹名字
+        char *curPath=new char[pdu->uiMsgLen];  //当前的位置
+        strncpy(DirName,pdu->caData,32);
+        memcpy(curPath,pdu->caMsg,pdu->uiMsgLen);
+        QString strPath=QString("%1/%2").arg(curPath).arg(DirName);//拼成选择的文件的位置
+        //qDebug()<<"strPath="<<strPath;
 
+        QFileInfo mydir(strPath);//把这个文件（夹）提取信息，用来判断是否是文件夹
+        if(mydir.isDir())  //是文件夹
+        {
+            QDir dir(strPath); //将这个文件夹放入Dir准备打开
+            QFileInfoList myFileInfo=dir.entryInfoList(); //找出该文件夹的内容
+            PDU *respdu=mkPDU((myFileInfo.size()-2)*sizeof(FileInfo)+1);  //回复的pdu
+            respdu->uiMsgType=ENUM_MSG_TYPE_INTO_FILE_RESPOND;
+            strcpy(respdu->caData,INTO_FILE_SUCESS); //打开成功的标志放在这里
+            FileInfo *fileInfoIndex=(FileInfo *)respdu->caMsg; //按照FileInfo的长度定位
+            int undo=0;
+            for(int i=0;i<myFileInfo.size();i++)
+            {
+                if(QString(".")==myFileInfo.at(i).fileName()||QString("..")==myFileInfo.at(i).fileName())//先跳过前面的“.”  “..”
+                {
+                    undo++;
+                    continue;
+                }
+                fileInfoIndex=(FileInfo *)respdu->caMsg+i-undo;  //跳一个FileInfo的距离
+                //放文件的名字
+                memcpy(fileInfoIndex->caFileName,myFileInfo.at(i).fileName().toStdString().c_str(),myFileInfo.at(i).fileName().toUtf8().size());
+                if(myFileInfo[i].isDir()) //放名字的类型
+                {
+                    fileInfoIndex->iFileType=0;//文件夹类型
+                }
+                else
+                {
+                    fileInfoIndex->iFileType=1; //文件类型
+                }
+            }
+            write((char *)respdu,respdu->uiPDULen);
+            free(respdu);
+            respdu=NULL;
+
+        }
+        else //不是文件夹
+        {
+            PDU *respdu=mkPDU(0);
+            respdu->uiMsgType=ENUM_MSG_TYPE_INTO_FILE_RESPOND;
+            strcpy(respdu->caData,INTO_FILE_FALIED);//进入文件夹失败
+            write((char *)respdu,respdu->uiPDULen);
+            free(respdu);
+            respdu=NULL;
+        }
+        break;
+    }
     default:
         break;
     }

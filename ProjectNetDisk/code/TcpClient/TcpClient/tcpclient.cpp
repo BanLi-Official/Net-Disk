@@ -77,6 +77,18 @@ QString TcpClient::getCurrentPath()
     return str_CurPath;
 }
 
+void TcpClient::setCurrentPath(QString str)
+{
+    this->str_CurPath=str;
+    return ;
+}
+
+void TcpClient::setCurrentChoose(QString str)
+{
+    this->str_CurChoose=str;
+    return;
+}
+
 void TcpClient::showConnect()//展示连接成功信息
 {
     QMessageBox::information(this,"连接服务器","连接服务器成功");
@@ -272,8 +284,8 @@ void TcpClient::resvMsg()
     }
     case ENUM_MSG_TYPE_DELETE_FILE_RESPOND:
     {
-        qDebug()<<"收到了来自服务器的respdu：";
-        Tools::getInstance().ShowPDU(pdu);
+        //qDebug()<<"收到了来自服务器的respdu：";
+        //Tools::getInstance().ShowPDU(pdu);
         QMessageBox::information(this,"删除文件/夹",pdu->caData);
         NetDisk::getinstance().Flush();
         break;
@@ -284,6 +296,24 @@ void TcpClient::resvMsg()
         NetDisk::getinstance().Flush();
         break;
     }
+    case ENUM_MSG_TYPE_INTO_FILE_RESPOND:
+    {
+        //qDebug()<<"收到了来自服务器的respdu：";
+        //Tools::getInstance().ShowPDU(pdu);
+        if(0==strcmp(pdu->caData,INTO_FILE_SUCESS))
+        {
+            OpeWidget::getInstance().getNetDisk()->updateFileList(pdu);
+            QString CurPathNew=QString("%1/%2").arg(getCurrentPath()).arg(str_CurChoose); //根据系统存的当前文件夹位置（点击前）和点击的文件夹，拼成一个新文件夹的地址
+            setCurrentPath(CurPathNew);//设置新的当前文件夹地址
+
+        }
+        else
+        {
+            QMessageBox::warning(this,"打卡文件夹","无法打开文件夹：该项不是文件夹");
+        }
+        break;
+    }
+
     default:
         break;
     }

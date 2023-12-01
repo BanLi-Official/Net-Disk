@@ -44,6 +44,7 @@ NetDisk::NetDisk(QWidget *parent)
     connect(m_pFlushDirPB,SIGNAL(clicked(bool)),this,SLOT(FlushDir()));
     connect(m_pDelDirPB,SIGNAL(clicked(bool)),this,SLOT(DeleteDir()));
     connect(m_pRenamePB,SIGNAL(clicked(bool)),this,SLOT(RenameDir()));
+    connect(m_pBookListW,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(IntoDir()));
 }
 
 void NetDisk::updateFileList(const PDU *pdu)
@@ -168,6 +169,29 @@ void NetDisk::RenameDir()
         QString newName=QInputDialog::getText(this,"重命名文件夹","新名字");
         strncpy(pdu->caData,caName.toStdString().c_str(),32);
         strncpy(pdu->caData+32,newName.toStdString().c_str(),32);
+        memcpy(pdu->caMsg,strCurrentPath.toStdString().c_str(),strCurrentPath.toUtf8().size());
+        TcpClient::getInstance().getTcpSocket().write((char *)pdu,pdu->uiPDULen);
+        free(pdu);
+        pdu=NULL;
+    }
+}
+
+void NetDisk::IntoDir()
+{
+    QString strCurrentPath=TcpClient::getInstance().getCurrentPath();
+    QListWidgetItem *itemCurrent=m_pBookListW->currentItem();
+
+    if(itemCurrent==NULL)
+    {
+        QMessageBox::warning(this,"重命名文件夹","请选择需要重命名的文件夹");
+    }
+    else
+    {
+        QString caName=itemCurrent->text();
+        TcpClient::getInstance().setCurrentChoose(caName);
+        PDU *pdu=mkPDU(strCurrentPath.toUtf8().size());
+        pdu->uiMsgType=ENUM_MSG_TYPE_INTO_FILE_REQUEST;
+        strncpy(pdu->caData,caName.toStdString().c_str(),32);
         memcpy(pdu->caMsg,strCurrentPath.toStdString().c_str(),strCurrentPath.toUtf8().size());
         TcpClient::getInstance().getTcpSocket().write((char *)pdu,pdu->uiPDULen);
         free(pdu);

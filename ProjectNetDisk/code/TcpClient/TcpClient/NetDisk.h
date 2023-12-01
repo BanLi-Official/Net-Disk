@@ -27,6 +27,7 @@ private slots:
     void FlushDir();//刷新文件夹展示
     void DeleteDir();//删除文件/夹
     void RenameDir();//重命名文件夹
+    void IntoDir();//进入文件夹
 
 
 

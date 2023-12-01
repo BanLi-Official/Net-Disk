@@ -37,6 +37,10 @@ typedef unsigned int uint;
 #define RENAME_FILE_SUCESS "重命名文件夹成功"
 #define RENAME_FILE_FALIED "重命名文件夹失败"
 
+
+#define INTO_FILE_SUCESS "进入文件夹成功"
+#define INTO_FILE_FALIED "进入文件夹失败"
+
 enum ENUM_MSG_TYPE    //利用枚举类型，设置消息的类型
 {
     ENUM_MSG_TYPE_MIN=0,
@@ -71,6 +75,10 @@ enum ENUM_MSG_TYPE    //利用枚举类型，设置消息的类型
     ENUM_MSG_TYPE_DELETE_FILE_RESPOND,//删除文件夹的回复
     ENUM_MSG_TYPE_RENAME_FILE_REQUEST,//重命名文件夹的请求
     ENUM_MSG_TYPE_RENAME_FILE_RESPOND,//重命名文件夹的回复
+    ENUM_MSG_TYPE_INTO_FILE_REQUEST,//进入文件夹的请求
+    ENUM_MSG_TYPE_INTO_FILE_RESPOND,//进入文件夹的回复
+    ENUM_MSG_TYPE_UPDATE_CURRENT_PATH,//修改当前文件夹的位置
+
 
     ENUM_MSG_TYPE_MAX=0x00ffffff
 };
