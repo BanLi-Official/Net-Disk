@@ -29,7 +29,13 @@ typedef unsigned int uint;
 #define CREATE_FILE_NO_PATH "当前文件夹路径不存在"
 #define CREATE_FILE_FAILED_UNKNOWN "创建文件夹因未知原因失败"
 
+#define DELETE_DIR_SUCESS "删除文件夹成功"
+#define DELETE_DIR_FALIED "删除文件夹失败"
+#define DELETE_FILE_SUCESS "删除文件成功"
+#define DELETE_FILE_FALIED "删除文件失败"
 
+#define RENAME_FILE_SUCESS "重命名文件夹成功"
+#define RENAME_FILE_FALIED "重命名文件夹失败"
 
 enum ENUM_MSG_TYPE    //利用枚举类型，设置消息的类型
 {
@@ -61,6 +67,10 @@ enum ENUM_MSG_TYPE    //利用枚举类型，设置消息的类型
     ENUM_MSG_TYPE_CREATE_FILE_RESPOND,//创建文件夹的回复
     ENUM_MSG_TYPE_FLUSH_FILE_REQUEST,//刷新文件夹的请求
     ENUM_MSG_TYPE_FLUSH_FILE_RESPOND,//刷新文件夹的回复
+    ENUM_MSG_TYPE_DELETE_FILE_REQUEST,//删除文件夹的请求
+    ENUM_MSG_TYPE_DELETE_FILE_RESPOND,//删除文件夹的回复
+    ENUM_MSG_TYPE_RENAME_FILE_REQUEST,//重命名文件夹的请求
+    ENUM_MSG_TYPE_RENAME_FILE_RESPOND,//重命名文件夹的回复
 
     ENUM_MSG_TYPE_MAX=0x00ffffff
 };

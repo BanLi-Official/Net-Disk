@@ -259,13 +259,29 @@ void TcpClient::resvMsg()
         //Tools::getInstance().ShowPDU(pdu);
         QString str=QString("%1").arg(pdu->caData);
         QMessageBox::information(this,"新建文件夹",str);
+        NetDisk::getinstance().Flush();
         break;
     }
     case ENUM_MSG_TYPE_FLUSH_FILE_RESPOND:
     {
-        qDebug()<<"收到了来自服务器的respdu：";
+        //qDebug()<<"收到了来自服务器的respdu：";
         //Tools::getInstance().ShowPDU(pdu);
         OpeWidget::getInstance().getNetDisk()->updateFileList(pdu);
+
+        break;
+    }
+    case ENUM_MSG_TYPE_DELETE_FILE_RESPOND:
+    {
+        qDebug()<<"收到了来自服务器的respdu：";
+        Tools::getInstance().ShowPDU(pdu);
+        QMessageBox::information(this,"删除文件/夹",pdu->caData);
+        NetDisk::getinstance().Flush();
+        break;
+    }
+    case ENUM_MSG_TYPE_RENAME_FILE_RESPOND:
+    {
+        QMessageBox::information(this,"重命名文件夹",pdu->caData);
+        NetDisk::getinstance().Flush();
         break;
     }
     default:

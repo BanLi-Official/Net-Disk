@@ -16,6 +16,8 @@ class NetDisk : public QWidget
 public:
     explicit NetDisk(QWidget *parent = nullptr);
     void updateFileList(const PDU *pdu);
+    static NetDisk &getinstance();
+    void Flush();//调用 FlushDir();刷新文件夹展示
 
 signals:
 
@@ -23,6 +25,10 @@ signals:
 private slots:
     void CreateDir();//创建一个文件夹
     void FlushDir();//刷新文件夹展示
+    void DeleteDir();//删除文件/夹
+    void RenameDir();//重命名文件夹
+
+
 
 
 

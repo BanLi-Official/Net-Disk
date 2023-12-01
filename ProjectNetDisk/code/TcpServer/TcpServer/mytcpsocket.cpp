@@ -398,8 +398,8 @@ void MyTcpSocket::recvMsg()//当有读信号出来的时候，就调用这个函
     }
     case ENUM_MSG_TYPE_FLUSH_FILE_REQUEST:
     {
-        qDebug()<<"收到了来自客户端的请求：";
-        Tools::getInstance().ShowPDU(pdu);
+        //qDebug()<<"收到了来自客户端的请求：";
+        //Tools::getInstance().ShowPDU(pdu);
         char *curPath=new char[pdu->uiMsgLen];
         memcpy(curPath,pdu->caMsg,pdu->uiMsgLen);
         QDir dir(curPath);
@@ -435,6 +435,89 @@ void MyTcpSocket::recvMsg()//当有读信号出来的时候，就调用这个函
         write((char *)respdu,respdu->uiPDULen);
         free(respdu);
         respdu=NULL;
+        break;
+    }
+    case ENUM_MSG_TYPE_DELETE_FILE_REQUEST:
+    {
+        //qDebug()<<"收到客户端发来的请求，内容如下";
+        //Tools::getInstance().ShowPDU(pdu);
+        char FileName[32];
+        strcpy(FileName,pdu->caData);
+        //char *CurrentPath=new char[pdu->uiMsgLen];
+        char CurrentPath[pdu->uiMsgLen];
+        memcpy(CurrentPath,pdu->caMsg,pdu->uiMsgLen);
+        QString DetPath=QString("%1/%2").arg(CurrentPath).arg(FileName);
+        //qDebug()<<"DetPath="<<DetPath;
+        QFileInfo fileInfo(DetPath);
+        //qDebug()<<fileInfo;
+
+        PDU *respdu=mkPDU(0);
+        respdu->uiMsgType=ENUM_MSG_TYPE_DELETE_FILE_RESPOND;
+        if(fileInfo.isDir())
+        {
+            QDir dir;
+            dir.setPath(DetPath);
+            bool ret=dir.removeRecursively();
+            if(ret)
+            {
+                //qDebug()<<"删除成功";
+                strcpy(respdu->caData,DELETE_DIR_SUCESS);
+            }
+            else
+            {
+                //qDebug()<<"删除失败";
+                strcpy(respdu->caData,DELETE_DIR_FALIED);
+            }
+        }
+        else //if(fileInfo.isFile())
+        {
+            QFile file(DetPath);
+            bool ret=file.remove();
+            if(ret)
+            {
+                //qDebug()<<"删除文件成功";
+                strcpy(respdu->caData,DELETE_FILE_SUCESS);
+            }
+            else
+            {
+                //qDebug()<<"删除文件失败";
+                strcpy(respdu->caData,DELETE_FILE_FALIED);
+            }
+
+        }
+
+
+        write((char *)respdu,respdu->uiPDULen);
+        free(respdu);
+        respdu=NULL;
+        break;
+    }
+    case ENUM_MSG_TYPE_RENAME_FILE_REQUEST:
+    {
+        char oldName[32];
+        char newName[32];
+        char *curPath=new char[pdu->uiMsgLen];
+        strncpy(oldName,pdu->caData,32);
+        strncpy(newName,pdu->caData+32,32);
+        memcpy(curPath,pdu->caMsg,pdu->uiMsgLen);
+        QString oldPath=QString("%1/%2").arg(curPath).arg(oldName);
+        QString newPath=QString("%1/%2").arg(curPath).arg(newName);
+        QDir dir;
+        bool ret=dir.rename(oldPath,newPath);
+        PDU *respdu=mkPDU(0);
+        respdu->uiMsgType=ENUM_MSG_TYPE_RENAME_FILE_RESPOND;
+        if(ret)
+        {
+            strcpy(respdu->caData,RENAME_FILE_SUCESS);
+        }
+        else
+        {
+            strcpy(respdu->caData,RENAME_FILE_FALIED);
+        }
+        write((char *)respdu,respdu->uiPDULen);
+        free(respdu);
+        respdu=NULL;
+
         break;
     }
 
