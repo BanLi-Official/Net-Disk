@@ -313,7 +313,35 @@ void TcpClient::resvMsg()
         }
         break;
     }
+    case ENUM_MSG_TYPE_RETURN_FILE_RESPOND:
+    {
+        //qDebug()<<"收到了来自服务器的respdu：";
+        //Tools::getInstance().ShowPDU(pdu);
+        if(0==strcmp(pdu->caData,RETURN_FILE_SUCESS))
+        {
+            OpeWidget::getInstance().getNetDisk()->updateFileList(pdu);
+            QString str_CurPath=TcpClient::getInstance().getCurrentPath();
+            //qDebug()<<"裁减前：   "<<str_CurPath;
+            int index=str_CurPath.lastIndexOf("/");//找到最后一个反斜杠的索引
+            QString CurPathNew=str_CurPath.left(index);
+            //qDebug()<<"裁减后：   "<<str_CurPath;
+            setCurrentPath(CurPathNew);//设置新的当前文件夹地址
 
+        }
+        else
+        {
+            QMessageBox::warning(this,"返回上一级","无法打开文件夹：该项不是文件夹");
+        }
+        break;
+    }
+    case ENUM_MSG_TYPE_UPLOAD_FILE_RESPOND:
+    {
+        //qDebug()<<"收到了来自服务器的respdu：";
+        //Tools::getInstance().ShowPDU(pdu);
+        QMessageBox::information(this,"文件传输",pdu->caData);
+        NetDisk::getinstance().Flush();
+        break;
+    }
     default:
         break;
     }

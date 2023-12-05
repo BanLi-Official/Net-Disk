@@ -28,6 +28,9 @@ private slots:
     void DeleteDir();//删除文件/夹
     void RenameDir();//重命名文件夹
     void IntoDir();//进入文件夹
+    void RetDir();//返回文件夹上一级
+    void UploadFile();//上传文件
+    void UploadFileData();//时间到就文件传输
 
 
 
@@ -44,6 +47,10 @@ private:
     QPushButton *m_pDownLoadPB;  //删除文件
     QPushButton *m_pDelFilePB;   //下载文件
     QPushButton *m_pShareFilePB;   //分享文件
+
+
+    QString OpenFilePath;//当前打开文件的地址
+    QTimer *Timer;
 
 
 };

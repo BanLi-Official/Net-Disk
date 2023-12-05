@@ -54,5 +54,7 @@ private:
     QString str_CurPath;//用户当前的位置
     QString str_CurChoose;//用户当前选择的位置
 
+
+
 };
 #endif // TCPCLIENT_H

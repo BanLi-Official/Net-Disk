@@ -1353,7 +1353,11 @@ release/mytcpsocket.o: ../TcpServer/mytcpsocket.cpp ../TcpServer/mytcpsocket.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtNetwork/QTcpServer \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtNetwork/qtcpserver.h \
 		../TcpServer/tools.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QFileInfoList
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QFileInfoList \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QFile \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QTimer \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtimer.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qbasictimer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mytcpsocket.o ..\TcpServer\mytcpsocket.cpp
 
 release/opedb.o: ../TcpServer/opedb.cpp ../TcpServer/opedb.h \

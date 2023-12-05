@@ -41,6 +41,12 @@ typedef unsigned int uint;
 #define INTO_FILE_SUCESS "进入文件夹成功"
 #define INTO_FILE_FALIED "进入文件夹失败"
 
+#define RETURN_FILE_SUCESS "返回文件夹成功"
+#define RETURN_FILE_FALIED "返回文件夹失败"
+
+#define UPLOAD_FILE_SUCESS "传输文件成功"
+#define UPLOAD_FILE_FALIED "传输文件失败"
+
 enum ENUM_MSG_TYPE    //利用枚举类型，设置消息的类型
 {
     ENUM_MSG_TYPE_MIN=0,
@@ -78,6 +84,10 @@ enum ENUM_MSG_TYPE    //利用枚举类型，设置消息的类型
     ENUM_MSG_TYPE_INTO_FILE_REQUEST,//进入文件夹的请求
     ENUM_MSG_TYPE_INTO_FILE_RESPOND,//进入文件夹的回复
     ENUM_MSG_TYPE_UPDATE_CURRENT_PATH,//修改当前文件夹的位置
+    ENUM_MSG_TYPE_RETURN_FILE_REQUEST,//返回上一级文件夹的请求
+    ENUM_MSG_TYPE_RETURN_FILE_RESPOND,//返回上一级文件夹的回复
+    ENUM_MSG_TYPE_UPLOAD_FILE_REQUEST,//上传文件的请求
+    ENUM_MSG_TYPE_UPLOAD_FILE_RESPOND,//上传文件的回复
 
 
     ENUM_MSG_TYPE_MAX=0x00ffffff

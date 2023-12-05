@@ -1,11 +1,15 @@
 #include "NetDisk.h"
 #include <QMessageBox>
 #include "tcpclient.h"
+#include <QFileDialog>
+#include <QTimer>
 
 
 NetDisk::NetDisk(QWidget *parent)
     : QWidget{parent}
 {
+    Timer=new QTimer;
+
     m_pBookListW=new QListWidget;
     m_pReturnPB=new QPushButton("返回");
     m_pCreateDirPB=new QPushButton("创建文件夹");
@@ -45,6 +49,10 @@ NetDisk::NetDisk(QWidget *parent)
     connect(m_pDelDirPB,SIGNAL(clicked(bool)),this,SLOT(DeleteDir()));
     connect(m_pRenamePB,SIGNAL(clicked(bool)),this,SLOT(RenameDir()));
     connect(m_pBookListW,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(IntoDir()));
+    connect(m_pReturnPB,SIGNAL(clicked(bool)),this,SLOT(RetDir()));
+    connect(m_pUploadPB,SIGNAL(clicked(bool)),this,SLOT(UploadFile()));
+    connect(Timer,SIGNAL(timeout()),this,SLOT(UploadFileData()));
+
 }
 
 void NetDisk::updateFileList(const PDU *pdu)
@@ -133,6 +141,7 @@ void NetDisk::FlushDir()
 void NetDisk::DeleteDir()
 {
     QString strCurrentPath=TcpClient::getInstance().getCurrentPath();
+    //qDebug()<<"当前文件夹位置："<<strCurrentPath;
     QListWidgetItem *itemCurrent=m_pBookListW->currentItem();
     if(itemCurrent==NULL)
     {
@@ -197,4 +206,89 @@ void NetDisk::IntoDir()
         free(pdu);
         pdu=NULL;
     }
+}
+
+void NetDisk::RetDir()
+{
+    QString CurPath=TcpClient::getInstance().getCurrentPath();
+    //qDebug()<<"当前位置："<<CurPath;
+    QString TarPath=QString("./UserFile/%1").arg(TcpClient::getInstance().getLoginName());
+    //qDebug()<<"目标位置："<<TarPath;
+    if(CurPath==TarPath)
+    {
+        QMessageBox::warning(this,"返回上一级","已到最后一层，无法再返回");
+        return;
+    }
+
+    PDU *pdu=mkPDU(CurPath.toUtf8().size());
+    pdu->uiMsgType=ENUM_MSG_TYPE_RETURN_FILE_REQUEST;
+    memcpy(pdu->caMsg,CurPath.toStdString().c_str(),CurPath.toUtf8().size());
+    TcpClient::getInstance().getTcpSocket().write((char *)pdu,pdu->uiPDULen);
+    free(pdu);
+    pdu=NULL;
+
+}
+
+void NetDisk::UploadFile()
+{
+    QString CurPath=TcpClient::getInstance().getCurrentPath();
+    QString FilePath=QFileDialog::getOpenFileName();
+    this->OpenFilePath=FilePath;
+    if(FilePath.isEmpty())
+    {
+        QMessageBox::information(this,"选择文件","文件输入不能为空！");
+    }
+    else
+    {
+        int index_of_xieGang=FilePath.lastIndexOf("/");
+        QString FileName=FilePath.right(FilePath.size()-index_of_xieGang-1);
+        //qDebug()<<"得到的文件名称为："<<FileName;
+
+        QFile File(FilePath);
+        qint64 FileSize=File.size();//获取文件大小
+
+        PDU *pdu=mkPDU(CurPath.toUtf8().size()+1);
+        pdu->uiMsgType=ENUM_MSG_TYPE_UPLOAD_FILE_REQUEST;
+        memcpy(pdu->caMsg,CurPath.toStdString().c_str(),CurPath.toUtf8().size());
+        sprintf(pdu->caData,"%s %lld",FileName.toStdString().c_str(),FileSize);
+
+        TcpClient::getInstance().getTcpSocket().write((char *)pdu,pdu->uiPDULen);
+        free(pdu);
+        pdu=NULL;
+
+        Timer->start(1000);
+    }
+}
+
+void NetDisk::UploadFileData()
+{
+    Timer->stop();
+    QFile File(OpenFilePath);
+    if(!File.open(QIODevice::ReadOnly))
+    {
+        QMessageBox::warning(this,"传输文件","打开文件失败");
+        return;
+    }
+
+    char *pBuffer=new char[4096];
+    qint64 ret=0;
+    while(true)
+    {
+        ret = File.read(pBuffer,4096);
+        if(ret<=4096&&ret>0)//传输这个buffer的内容
+        {
+            TcpClient::getInstance().getTcpSocket().write(pBuffer,ret);
+        }
+        else if(ret==0)
+        {
+            break;
+        }
+        else
+        {
+            QMessageBox::warning(this,"传输文件","传输文件失败");
+        }
+    }
+    File.close();
+    delete []pBuffer;
+    pBuffer=NULL;
 }
