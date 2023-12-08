@@ -326,6 +326,9 @@ debug/moc_mytcpserver.cpp: ../TcpServer/mytcpserver.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qcalendar.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qlocale.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtimezone.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QTimer \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtimer.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qbasictimer.h \
 		debug/moc_predefs.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/bin/moc.exe
 	F:\study_app\QT\main\6.6.0\mingw_64\bin\moc.exe $(DEFINES) --include F:/WORKS/c++/ProjectNetDisk/code/TcpServer/build-TcpServer-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/debug/moc_predefs.h -IF:/study_app/QT/main/6.6.0/mingw_64/mkspecs/win32-g++ -IF:/WORKS/c++/ProjectNetDisk/code/TcpServer/TcpServer -IF:/study_app/QT/main/6.6.0/mingw_64/include -IF:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets -IF:/study_app/QT/main/6.6.0/mingw_64/include/QtGui -IF:/study_app/QT/main/6.6.0/mingw_64/include/QtNetwork -IF:/study_app/QT/main/6.6.0/mingw_64/include/QtSql -IF:/study_app/QT/main/6.6.0/mingw_64/include/QtCore -I. -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -IF:/study_app/QT/main/Tools/mingw1120_64/x86_64-w64-mingw32/include ..\TcpServer\mytcpserver.h -o debug\moc_mytcpserver.cpp
@@ -458,6 +461,9 @@ debug/moc_mytcpsocket.cpp: ../TcpServer/mytcpsocket.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qcalendar.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qlocale.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtimezone.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QTimer \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtimer.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qbasictimer.h \
 		debug/moc_predefs.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/bin/moc.exe
 	F:\study_app\QT\main\6.6.0\mingw_64\bin\moc.exe $(DEFINES) --include F:/WORKS/c++/ProjectNetDisk/code/TcpServer/build-TcpServer-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/debug/moc_predefs.h -IF:/study_app/QT/main/6.6.0/mingw_64/mkspecs/win32-g++ -IF:/WORKS/c++/ProjectNetDisk/code/TcpServer/TcpServer -IF:/study_app/QT/main/6.6.0/mingw_64/include -IF:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets -IF:/study_app/QT/main/6.6.0/mingw_64/include/QtGui -IF:/study_app/QT/main/6.6.0/mingw_64/include/QtNetwork -IF:/study_app/QT/main/6.6.0/mingw_64/include/QtSql -IF:/study_app/QT/main/6.6.0/mingw_64/include/QtCore -I. -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -IF:/study_app/QT/main/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -IF:/study_app/QT/main/Tools/mingw1120_64/x86_64-w64-mingw32/include ..\TcpServer\mytcpsocket.h -o debug\moc_mytcpsocket.cpp
@@ -1155,6 +1161,9 @@ debug/mytcpserver.o: ../TcpServer/mytcpserver.cpp ../TcpServer/mytcpserver.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qcalendar.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qlocale.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtimezone.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QTimer \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtimer.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qbasictimer.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QDebug.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\mytcpserver.o ..\TcpServer\mytcpserver.cpp
 
@@ -1286,6 +1295,9 @@ debug/mytcpsocket.o: ../TcpServer/mytcpsocket.cpp ../TcpServer/mytcpsocket.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qcalendar.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qlocale.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtimezone.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QTimer \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtimer.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qbasictimer.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QDebug \
 		../TcpServer/opedb.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QObject \
@@ -1354,10 +1366,7 @@ debug/mytcpsocket.o: ../TcpServer/mytcpsocket.cpp ../TcpServer/mytcpsocket.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtNetwork/qtcpserver.h \
 		../TcpServer/tools.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QFileInfoList \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QFile \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QTimer \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtimer.h \
-		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qbasictimer.h
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QFile
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\mytcpsocket.o ..\TcpServer\mytcpsocket.cpp
 
 debug/opedb.o: ../TcpServer/opedb.cpp ../TcpServer/opedb.h \
@@ -1828,6 +1837,9 @@ debug/tcpserver.o: ../TcpServer/tcpserver.cpp ../TcpServer/tcpserver.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qcalendar.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qlocale.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtimezone.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QTimer \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qtimer.h \
+		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/qbasictimer.h \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QByteArray \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtCore/QDebug \
 		F:/study_app/QT/main/6.6.0/mingw_64/include/QtWidgets/QMessageBox \

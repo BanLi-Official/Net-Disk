@@ -8,6 +8,7 @@
 #include <QVBoxLayout>
 #include <QInputDialog>
 #include "protocol.h"
+#include <QFile>
 
 
 class NetDisk : public QWidget
@@ -16,8 +17,19 @@ class NetDisk : public QWidget
 public:
     explicit NetDisk(QWidget *parent = nullptr);
     void updateFileList(const PDU *pdu);
-    static NetDisk &getinstance();
+    static NetDisk& getinstance();
     void Flush();//调用 FlushDir();刷新文件夹展示
+    void setIs_DownLoading(bool status);//设置状态
+    void setITotla(qint64 size);//设置文件大小
+    void setIReceved(qint64 size);//设置已接收的文件大小
+    QString getSavePath();//获取保存文件的位置
+    bool getIsDownLoading();//获取下载状态
+
+
+    QFile file;  //当前操作的文件
+
+    qint64 iTotal;//文件的总体大小
+    qint64 iReceved;//文件接收的大小
 
 signals:
 
@@ -31,6 +43,7 @@ private slots:
     void RetDir();//返回文件夹上一级
     void UploadFile();//上传文件
     void UploadFileData();//时间到就文件传输
+    void DownLoadData();//下载文件
 
 
 
@@ -51,6 +64,13 @@ private:
 
     QString OpenFilePath;//当前打开文件的地址
     QTimer *Timer;
+    QString SavePath;//下载位置
+
+    bool is_DownLoading;//下载状态
+
+
+
+
 
 
 };

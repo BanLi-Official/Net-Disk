@@ -12,6 +12,7 @@ class OpeDB : public QObject
 public:
     explicit OpeDB(QObject *parent = nullptr);
     static OpeDB& getInstance();  //单例模式，只有一个数据库操作类
+
     void init();//数据库连接的初始化函数
     ~OpeDB();
 

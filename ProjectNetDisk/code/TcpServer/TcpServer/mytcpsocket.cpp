@@ -13,8 +13,12 @@ MyTcpSocket::MyTcpSocket(QObject *parent)
     : QTcpSocket{parent}
 {
     this->m_bUpload=false;
+    timer=new QTimer;
     connect(this,SIGNAL(readyRead()),this,SLOT(recvMsg()));//将读信号和recvMsg函数绑定在一起
     connect(this,SIGNAL(disconnected()),this,SLOT(clientOffline()));//将用户下线的信号和clientOffline()函数绑定在一起
+    connect(timer,SIGNAL(timeout()),this,SLOT(TransData()));
+
+
 }
 
 QString MyTcpSocket::getName()
@@ -686,6 +690,39 @@ void MyTcpSocket::recvMsg()//当有读信号出来的时候，就调用这个函
 
             break;
         }
+        case ENUM_MSG_TYPE_DOWNLOAD_FILE_REQUEST:
+        {
+            //qDebug()<<"收到了来自客户端的pdu";
+            //Tools::getInstance().ShowPDU(pdu);
+            char FileName[32];
+            strcpy(FileName,pdu->caData);
+            char *CurPath=new char[pdu->uiMsgLen];
+            memcpy(CurPath,pdu->caMsg,pdu->uiMsgLen);
+            QString filePath=QString("%1/%2").arg(CurPath).arg(FileName);
+            //qDebug()<<"拼接成的地址为： "<<filePath;
+            free(CurPath);
+            CurPath=NULL;
+
+            qint64 FileSize=0;
+            QFileInfo fileInfo(filePath);
+            FileSize=fileInfo.size();
+
+            //回复的pdu，告诉客户端它应该接收多大的文件
+            PDU *respdu=mkPDU(0);
+            respdu->uiMsgType=ENUM_MSG_TYPE_DOWNLOAD_FILE_RESPOND;
+            sprintf(respdu->caData,"%s %lld",FileName,FileSize);
+            write((char *)respdu,respdu->uiPDULen);
+            free(respdu);
+            respdu=NULL;
+
+            m_file.setFileName(filePath);
+
+            m_file.open(QIODevice::ReadOnly);
+            //qDebug()<<"打开："<<filePath;
+            timer->start(1000);
+            //qDebug()<<"打开开始了："<<filePath;
+            break;
+        }
         default:
             break;
         }
@@ -733,4 +770,38 @@ void MyTcpSocket::clientOffline()
 
     OpeDB::getInstance().handleSetOffline(m_strName);//将用户状态设置为离线状态
     emit offline(this);  //发送信号 this为MyTcpSocket对象的地址
+}
+
+void MyTcpSocket::TransData()
+{
+    timer->stop();
+    qint64 ret=0;
+    char *buffer=new char[4096];
+
+    while(true)
+    {
+
+        ret=m_file.read(buffer,4096);
+        if(ret>0&&ret<=4096)
+        {
+            write(buffer,ret);
+
+        }
+        else if(ret==0)
+        {
+            m_file.close();
+            break;
+        }
+        else if(ret<0)
+        {
+            m_file.close();
+            qDebug()<<"传输过程中，读取文件出现错误";
+            break;
+        }
+
+    }
+    //qDebug()<<"一次处理";
+
+    delete[] buffer;
+    buffer=NULL;
 }

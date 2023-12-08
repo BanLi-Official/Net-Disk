@@ -9,6 +9,7 @@ NetDisk::NetDisk(QWidget *parent)
     : QWidget{parent}
 {
     Timer=new QTimer;
+    //is_DownLoading=false;
 
     m_pBookListW=new QListWidget;
     m_pReturnPB=new QPushButton("返回");
@@ -52,6 +53,8 @@ NetDisk::NetDisk(QWidget *parent)
     connect(m_pReturnPB,SIGNAL(clicked(bool)),this,SLOT(RetDir()));
     connect(m_pUploadPB,SIGNAL(clicked(bool)),this,SLOT(UploadFile()));
     connect(Timer,SIGNAL(timeout()),this,SLOT(UploadFileData()));
+    connect(m_pDownLoadPB,SIGNAL(clicked(bool)),this,SLOT(DownLoadData()));
+
 
 }
 
@@ -92,6 +95,31 @@ NetDisk &NetDisk::getinstance()
 void NetDisk::Flush()
 {
     this->FlushDir();
+}
+
+void NetDisk::setIs_DownLoading(bool status)
+{
+    this->is_DownLoading=status;
+}
+
+void NetDisk::setITotla(qint64 size)
+{
+    this->iTotal=size;
+}
+
+void NetDisk::setIReceved(qint64 size)
+{
+    this->iReceved=size;
+}
+
+QString NetDisk::getSavePath()
+{
+    return this->SavePath;
+}
+
+bool NetDisk::getIsDownLoading()
+{
+    return this->is_DownLoading;
 }
 
 
@@ -292,3 +320,69 @@ void NetDisk::UploadFileData()
     delete []pBuffer;
     pBuffer=NULL;
 }
+
+void NetDisk::DownLoadData()
+{
+    //获取文件名称
+    QListWidgetItem *CurItem=m_pBookListW->currentItem();
+    QString FileName=CurItem->text();
+    if(FileName.isEmpty())
+    {
+        QMessageBox::warning(this,"下载文件","请选择要下载的文件");
+        return;
+    }
+    else
+    {
+        //设置存储位置
+        QString savePath=QFileDialog::getSaveFileName();
+
+        if(savePath.isEmpty())
+        {
+            QMessageBox::warning(this,"下载文件","请选择保存文件的位置");
+            SavePath.clear();//将NetDisk中的位置清零，和上面的那个不是同一个
+            return;
+        }
+        else
+        {
+            SavePath=savePath;
+            TcpClient::getInstance().setSavePath(savePath);
+            //QMessageBox::information(this,"下载文件","地址已经存入:"+TcpClient::getInstance().getSavePath());
+            //qDebug()<<"NetDisk地址："<<this;
+        }
+
+
+
+        //获取当前位置
+        QString CurPath=TcpClient::getInstance().getCurrentPath();
+        PDU *pdu=mkPDU(CurPath.toUtf8().size());
+
+        //装pdu并发送
+        strcpy(pdu->caData,FileName.toStdString().c_str());
+        memcpy(pdu->caMsg,CurPath.toStdString().c_str(),pdu->uiMsgLen);
+        pdu->uiMsgType=ENUM_MSG_TYPE_DOWNLOAD_FILE_REQUEST;
+        TcpClient::getInstance().getTcpSocket().write((char *)pdu,pdu->uiPDULen);
+
+        free(pdu);
+        pdu=NULL;
+
+    }
+
+
+
+
+
+
+
+    //设置读取状态与存储位置
+}
+
+
+
+
+
+
+
+
+
+
+

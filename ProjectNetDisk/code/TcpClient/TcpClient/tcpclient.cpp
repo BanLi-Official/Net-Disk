@@ -7,7 +7,7 @@
 #include "protocol.h"
 #include "privatechat.h"
 #include "tools.h"
-
+#include <QTimer>
 TcpClient::TcpClient(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::TcpClient)
@@ -23,6 +23,7 @@ TcpClient::TcpClient(QWidget *parent)
 
 
     m_tcpSocket.connectToHost(QHostAddress(m_strIP),m_usPort);//连接到服务器
+    //is_downLoading=false;
 
 
 }
@@ -62,6 +63,8 @@ TcpClient &TcpClient::getInstance()
     return instance;
 }
 
+
+
 QTcpSocket &TcpClient::getTcpSocket()
 {
     return m_tcpSocket;
@@ -89,6 +92,26 @@ void TcpClient::setCurrentChoose(QString str)
     return;
 }
 
+QString TcpClient::getSavePath()
+{
+    return fileSavePath;
+}
+
+bool TcpClient::getIsDownLoading()
+{
+    return is_downLoading;
+}
+
+void TcpClient::setSavePath(QString str)
+{
+    fileSavePath=str;
+}
+
+void TcpClient::setIsDownLoading(bool a)
+{
+    is_downLoading=a;
+}
+
 void TcpClient::showConnect()//展示连接成功信息
 {
     QMessageBox::information(this,"连接服务器","连接服务器成功");
@@ -96,7 +119,38 @@ void TcpClient::showConnect()//展示连接成功信息
 
 void TcpClient::resvMsg()
 {
-    qDebug()<<"收到pdu长度："<<m_tcpSocket.bytesAvailable();//先输出接收到的数据的长度
+    qDebug()<<"getIsDownLoading()="<<TcpClient::getInstance().getIsDownLoading();
+    if(TcpClient::getInstance().getIsDownLoading())//如果是正在下载文件，则只运行里面的东西
+    {
+        qDebug()<<"11111111111";
+        QByteArray buffer=m_tcpSocket.readAll();
+        NetDisk::getinstance().file.write(buffer);
+
+        NetDisk::getinstance().iReceved+=buffer.size();
+        if(NetDisk::getinstance().iReceved==NetDisk::getinstance().iTotal)
+        {
+            NetDisk::getinstance().file.close();
+            NetDisk::getinstance().iTotal=0;
+            NetDisk::getinstance().iReceved=0;
+            //NetDisk::getinstance().setIs_DownLoading(false);
+            setIsDownLoading(false);
+            QMessageBox::information(this,"下载文件","文件下载成功！");
+
+        }
+        else if(NetDisk::getinstance().iReceved>NetDisk::getinstance().iTotal)
+        {
+            NetDisk::getinstance().file.close();
+            NetDisk::getinstance().iTotal=0;
+            NetDisk::getinstance().iReceved=0;
+            //NetDisk::getinstance().setIs_DownLoading(false);
+            setIsDownLoading(false);
+            QMessageBox::information(this,"下载文件","文件下载失败了！");
+        }
+        qDebug()<<"22222";
+        return;
+    }
+
+   // qDebug()<<"收到pdu长度："<<m_tcpSocket.bytesAvailable();//先输出接收到的数据的长度
     //接收数据
     uint uiPDULen=0;
     m_tcpSocket.read((char *)&uiPDULen,sizeof(uint));
@@ -340,6 +394,37 @@ void TcpClient::resvMsg()
         //Tools::getInstance().ShowPDU(pdu);
         QMessageBox::information(this,"文件传输",pdu->caData);
         NetDisk::getinstance().Flush();
+        break;
+    }
+    case ENUM_MSG_TYPE_DOWNLOAD_FILE_RESPOND:
+    {
+        qDebug()<<"收到了来自服务器的respdu：";
+        Tools::getInstance().ShowPDU(pdu);
+
+
+        //检查获取文件名称和大小，为大小赋值
+        char *FileName=new char[32];
+        qint64 fileSize=0;
+
+        sscanf(pdu->caData,"%s %lld",FileName,&fileSize);
+
+        NetDisk::getinstance().setITotla(fileSize);
+        NetDisk::getinstance().setIReceved(0);
+        //NetDisk::getinstance().setIs_DownLoading(true);
+        TcpClient::getInstance().setIsDownLoading(true);
+
+
+        //打开文件，设置读取状态
+        QTimer timer;
+        //timer.start(1000);
+        NetDisk::getinstance().file.setFileName(getSavePath());
+        //qDebug()<<"savepath="<<NetDisk::getinstance().getSavePath();
+
+        if(!NetDisk::getinstance().file.open(QIODevice::WriteOnly))
+        {
+            QMessageBox::warning(this,"下载文件","创建文件失败，位于ENUM_MSG_TYPE_DOWNLOAD_FILE_RESPOND部分");
+        }
+        qDebug()<<"aaaaa";
         break;
     }
     default:
