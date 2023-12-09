@@ -19,6 +19,7 @@ public:
     void ShowAllOnlineUsr(PDU *pdu);
     void updateFriendList(PDU *pdu);//更新好友列表
     void updateM_pShowMsgTE(PDU *pdu);//更新群聊消息
+    QListWidget* getFriendList();//获取好友列表
 
 
     QString m_strName;//临时存储的名字

@@ -5,6 +5,7 @@ debug/online.o
 debug/opewidget.o
 debug/privatechat.o
 debug/protocol.o
+debug/sharefile.o
 debug/tcpclient.o
 debug/tools.o
 debug/qrc_FileType.o
@@ -14,4 +15,5 @@ debug/moc_friend.o
 debug/moc_online.o
 debug/moc_opewidget.o
 debug/moc_privatechat.o
+debug/moc_sharefile.o
 debug/moc_tcpclient.o

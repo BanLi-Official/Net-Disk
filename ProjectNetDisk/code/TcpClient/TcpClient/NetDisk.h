@@ -44,6 +44,8 @@ private slots:
     void UploadFile();//上传文件
     void UploadFileData();//时间到就文件传输
     void DownLoadData();//下载文件
+    void ShareFile_func();//分享
+
 
 
 
@@ -64,6 +66,7 @@ private:
 
     QString OpenFilePath;//当前打开文件的地址
     QTimer *Timer;
+    QTimer *Timer2;
     QString SavePath;//下载位置
 
     bool is_DownLoading;//下载状态

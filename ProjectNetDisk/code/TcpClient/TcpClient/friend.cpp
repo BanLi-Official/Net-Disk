@@ -92,6 +92,11 @@ void Friend::updateM_pShowMsgTE(PDU *pdu)
     m_pShowMsgTE->append(data_str);
 }
 
+QListWidget* Friend::getFriendList()
+{
+    return this->m_pFriendListWidget;
+}
+
 void Friend::ShowOnline()
 {
     qDebug()<<"friend";

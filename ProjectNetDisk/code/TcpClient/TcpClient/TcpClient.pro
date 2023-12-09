@@ -16,6 +16,7 @@ SOURCES += \
     opewidget.cpp \
     privatechat.cpp \
     protocol.cpp \
+    sharefile.cpp \
     tcpclient.cpp \
     tools.cpp
 
@@ -26,6 +27,7 @@ HEADERS += \
     opewidget.h \
     privatechat.h \
     protocol.h \
+    sharefile.h \
     tcpclient.h \
     tools.h
 

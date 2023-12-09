@@ -3,12 +3,16 @@
 #include "tcpclient.h"
 #include <QFileDialog>
 #include <QTimer>
+#include "opewidget.h"
+#include "sharefile.h"
+#include <QThread>
 
 
 NetDisk::NetDisk(QWidget *parent)
     : QWidget{parent}
 {
     Timer=new QTimer;
+    Timer2=new QTimer;
     is_DownLoading=false;
 
     m_pBookListW=new QListWidget;
@@ -54,6 +58,7 @@ NetDisk::NetDisk(QWidget *parent)
     connect(m_pUploadPB,SIGNAL(clicked(bool)),this,SLOT(UploadFile()));
     connect(Timer,SIGNAL(timeout()),this,SLOT(UploadFileData()));
     connect(m_pDownLoadPB,SIGNAL(clicked(bool)),this,SLOT(DownLoadData()));
+    connect(m_pShareFilePB,SIGNAL(clicked(bool)),this,SLOT(ShareFile_func()));
 
 
 }
@@ -369,14 +374,34 @@ void NetDisk::DownLoadData()
 
     }
 
-
-
-
-
-
-
     //设置读取状态与存储位置
 }
+
+void NetDisk::ShareFile_func()
+{
+    Friend *pFriend=OpeWidget::getInstance().getFriend();
+    QListWidget *pfriendList=pFriend->getFriendList();
+    //qDebug()<<"pfriendList="<<pfriendList;
+
+    if(pfriendList->count()==0)
+    {
+        //qDebug()<<"好友为空";
+        //OpeWidget::getInstance().getFriend()->flushFriend();
+        //Timer2->start(1000);
+        //QThread::sleep(1);
+        QMessageBox::warning(this,"好友分享","请先在好友界面获取在线好友信息");
+        return;
+
+    }
+
+    ShareFile::getInstance().updateFriend(pfriendList);
+    if(ShareFile::getInstance().isHidden())
+    {
+        ShareFile::getInstance().show();
+    }
+}
+
+
 
 
 
