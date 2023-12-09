@@ -9,7 +9,7 @@ NetDisk::NetDisk(QWidget *parent)
     : QWidget{parent}
 {
     Timer=new QTimer;
-    //is_DownLoading=false;
+    is_DownLoading=false;
 
     m_pBookListW=new QListWidget;
     m_pReturnPB=new QPushButton("返回");
@@ -325,14 +325,16 @@ void NetDisk::DownLoadData()
 {
     //获取文件名称
     QListWidgetItem *CurItem=m_pBookListW->currentItem();
-    QString FileName=CurItem->text();
-    if(FileName.isEmpty())
+
+    if(CurItem==NULL)
     {
         QMessageBox::warning(this,"下载文件","请选择要下载的文件");
         return;
     }
     else
     {
+        //获取当前选项
+        QString FileName=CurItem->text();
         //设置存储位置
         QString savePath=QFileDialog::getSaveFileName();
 

@@ -18,7 +18,8 @@ OpeDB &OpeDB::getInstance()//单例模式，只有一个数据库操作类
 void OpeDB::init()  //数据库连接的初始化函数
 {
     m_db.setHostName("localhost");
-    m_db.setDatabaseName("../Database/cloud.db");
+    //m_db.setHostName("10.102.57.215");
+    m_db.setDatabaseName("F:/WORKS/c++/ProjectNetDisk/code/TcpServer/Database/cloud.db");
     if(m_db.open())
     {
         QSqlQuery query;
