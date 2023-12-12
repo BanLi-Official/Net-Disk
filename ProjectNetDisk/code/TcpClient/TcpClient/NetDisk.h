@@ -24,6 +24,7 @@ public:
     void setIReceved(qint64 size);//设置已接收的文件大小
     QString getSavePath();//获取保存文件的位置
     bool getIsDownLoading();//获取下载状态
+    QString getShareFileName();//获取分享文件的名称
 
 
     QFile file;  //当前操作的文件
@@ -71,7 +72,7 @@ private:
 
     bool is_DownLoading;//下载状态
 
-
+    QString m_strShareFileName;//用户分享的文件名称
 
 
 

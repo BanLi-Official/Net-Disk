@@ -21,6 +21,7 @@ TcpClient::TcpClient(QWidget *parent)
 
 
 
+
     qDebug()<<"地址为："<<m_strIP;
     m_tcpSocket.connectToHost(QHostAddress(m_strIP),m_usPort);//连接到服务器
     qDebug()<<"正在连接："<<m_strIP;

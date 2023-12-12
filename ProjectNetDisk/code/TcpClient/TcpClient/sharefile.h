@@ -23,6 +23,10 @@ public:
 signals:
 
 public slots:
+    void cancelSelect();//取消选择的函数
+    void selectAll();//全选函数
+    void OKShare();//分享函数
+    void cancelShare();//取消分享函数
 
 private:
     QPushButton *m_pSelectAllPB;  //选择所有好友的按钮

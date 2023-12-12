@@ -11,8 +11,6 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     TcpClient::getInstance().show();//在这里TcpClient使用了单例模式
-    //ShareFile m;
-    //m.show();
 
     return a.exec();
 }

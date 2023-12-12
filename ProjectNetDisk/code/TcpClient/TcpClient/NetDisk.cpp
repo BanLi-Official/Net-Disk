@@ -127,6 +127,11 @@ bool NetDisk::getIsDownLoading()
     return this->is_DownLoading;
 }
 
+QString NetDisk::getShareFileName()
+{
+    return this->m_strShareFileName;
+}
+
 
 
 void NetDisk::CreateDir()
@@ -379,6 +384,20 @@ void NetDisk::DownLoadData()
 
 void NetDisk::ShareFile_func()
 {
+    //获取文件名称
+    QListWidgetItem *CurItem=m_pBookListW->currentItem();
+
+    if(CurItem==NULL)
+    {
+        QMessageBox::warning(this,"分享文件","请选择要分享的文件");
+        return;
+    }
+    else
+    {
+        m_strShareFileName=CurItem->text();
+    }
+
+
     Friend *pFriend=OpeWidget::getInstance().getFriend();
     QListWidget *pfriendList=pFriend->getFriendList();
     //qDebug()<<"pfriendList="<<pfriendList;
