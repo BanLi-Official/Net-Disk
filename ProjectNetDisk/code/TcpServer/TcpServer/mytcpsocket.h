@@ -13,6 +13,8 @@ public:
     explicit MyTcpSocket(QObject *parent = nullptr);
     QString getName();
     QString getNetDiskRoot();
+    bool cpyDir(QString FromPath,QString ToPath);
+
 signals:
     void offline(MyTcpSocket *mysocket);//下线的信号
 public slots:

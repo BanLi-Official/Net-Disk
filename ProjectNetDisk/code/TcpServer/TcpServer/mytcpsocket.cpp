@@ -8,6 +8,7 @@
 #include <QFileInfoList>
 #include <QFile>
 #include <QTimer>
+#include <QThread>
 
 MyTcpSocket::MyTcpSocket(QObject *parent)
     : QTcpSocket{parent}
@@ -29,6 +30,47 @@ QString MyTcpSocket::getName()
 QString MyTcpSocket::getNetDiskRoot()
 {
     return this->Root;
+}
+
+bool MyTcpSocket::cpyDir(QString FromPath, QString ToPath)
+{
+
+    bool ret=true;
+    QDir dir;
+    dir.mkdir(ToPath);
+    dir.setPath(FromPath);
+
+
+    QString sourcePath;
+    QString DestPath;
+
+
+    QFileInfoList list= dir.entryInfoList();
+    for(int i=0;i<list.size();i++)
+    {
+        if(list.at(i).isFile())
+        {
+
+            sourcePath=FromPath+"/"+list.at(i).fileName();
+            DestPath=ToPath+"/"+list.at(i).fileName();
+            if(!QFile::copy(sourcePath,DestPath))
+            {
+                return false;
+            }
+        }
+        else
+        {
+            if(QString(".")==list.at(i).fileName()||QString("..")==list.at(i).fileName())
+            {
+                continue;
+            }
+            sourcePath=FromPath+"/"+list.at(i).fileName();
+            DestPath=ToPath+"/"+list.at(i).fileName();
+            ret=cpyDir(sourcePath,DestPath);
+        }
+
+    }
+    return ret;
 }
 
 void MyTcpSocket::recvMsg()//当有读信号出来的时候，就调用这个函数，用来读取信息
@@ -770,33 +812,49 @@ void MyTcpSocket::recvMsg()//当有读信号出来的时候，就调用这个函
             char *FileName=&FilePath[index+1];//获取反斜杠之后的文件名称
 
             QString ToPath=getNetDiskRoot()+ToNameStr+"/"+FileName;//组合目的地址
-            qDebug()<<"strFromPath="<<StrFilePath;
-            qDebug()<<"FromPath="<<FilePath;
-            qDebug()<<"ToPath="<<ToPath;
-
-
-            //QFile file(FilePath);
-            //QFile DestFile()
-            QFile sourceFile(FilePath);
-            QFile destFile(ToPath);
 
             PDU *respdu=mkPDU(0);
             respdu->uiMsgType=ENUM_MSG_TYPE_SHARE_FILE_RESULT;
 
 
-            if (!sourceFile.exists()) {
-                qDebug() << "源文件不存在";
-                strcpy(respdu->caData,SHARE_FILE_NOEXISTS);
-            }else if (destFile.exists()) {
-                qDebug() << "目标文件已存在";
-                strcpy(respdu->caData,SHARE_FILE_EXISTS);
-            }else if (QFile::copy(FilePath, ToPath)) {
-                qDebug() << "文件复制成功";
-                strcpy(respdu->caData,SHARE_FILE_SUCESS);
-            } else {
-                qDebug() << "文件复制失败";
-                strcpy(respdu->caData,SHARE_FILE_FALIED);
+            QFileInfo File(FilePath);
+            if(File.isDir())
+            {
+                qDebug()<<"文件夹";
+                //复制文件夹的函数
+                if(cpyDir(FilePath,ToPath))
+                {
+                    strcpy(respdu->caData,SHARE_FILE_SUCESS);
+                }
+                else
+                {
+                    strcpy(respdu->caData,SHARE_FILE_FALIED);
+                }
             }
+            else
+            {
+                qDebug()<<"文件";
+                QFile sourceFile(FilePath);
+                QFile destFile(ToPath);
+
+
+                if (!sourceFile.exists()) {
+                    qDebug() << "源文件不存在";
+                    strcpy(respdu->caData,SHARE_FILE_NOEXISTS);
+                }else if (destFile.exists()) {
+                    qDebug() << "目标文件已存在";
+                    strcpy(respdu->caData,SHARE_FILE_EXISTS);
+                }else if (QFile::copy(FilePath, ToPath)) {
+                    qDebug() << "文件复制成功";
+                    strcpy(respdu->caData,SHARE_FILE_SUCESS);
+                } else {
+                    qDebug() << "文件复制失败";
+                    strcpy(respdu->caData,SHARE_FILE_FALIED);
+                }
+            }
+
+
+
             write((char *)respdu,respdu->uiPDULen);
             free(respdu);
             respdu=NULL;
