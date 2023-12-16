@@ -26,6 +26,11 @@ QString MyTcpSocket::getName()
     return m_strName;
 }
 
+QString MyTcpSocket::getNetDiskRoot()
+{
+    return this->Root;
+}
+
 void MyTcpSocket::recvMsg()//当有读信号出来的时候，就调用这个函数，用来读取信息
 {
 
@@ -721,6 +726,81 @@ void MyTcpSocket::recvMsg()//当有读信号出来的时候，就调用这个函
             //qDebug()<<"打开："<<filePath;
             timer->start(1000);
             //qDebug()<<"打开开始了："<<filePath;
+            break;
+        }
+        case ENUM_MSG_TYPE_SHARE_FILE_REQUEST:
+        {
+            char caFromName[32];
+            int friend_num;
+            sscanf(pdu->caData,"%s%d",caFromName,&friend_num);
+            int FilePathSize=pdu->uiPDULen-32*friend_num;
+            //制作待转发的分享请求
+            PDU *respdu=mkPDU(FilePathSize);
+            respdu->uiMsgType=ENUM_MSG_TYPE_SHARE_FILE_NOTE;
+            strcpy(respdu->caData,caFromName);
+            memcpy(respdu->caMsg,(char *)pdu->caMsg+32*friend_num,FilePathSize);
+
+            //找到转发对象并进行转发
+            for(int i=0;i<friend_num;i++)
+            {
+                char caToName[32];
+                memcpy(caToName,(char *)pdu->caMsg+i*32,32);
+                MyTcpServer::getInstance().resend(caToName,respdu);
+            }
+
+            break;
+        }
+        case ENUM_MSG_TYPE_SHARE_FILE_RESPOND:
+        {
+            //qDebug()<<"收到了来自客户端的pdu";
+            //Tools::getInstance().ShowPDU(pdu);
+            char ToName[32];
+            strcpy(ToName,pdu->caData);
+            char *FilePath=new char[pdu->uiMsgLen];
+            QString StrFilePath;
+
+            memcpy(FilePath,pdu->caMsg,pdu->uiMsgLen);
+            QString ToNameStr(ToName);
+
+            //获取文件名称
+            //int index_xie=QString.lastIndexOf(FilePath,"/");
+            char* lastSlash = strrchr(FilePath, '/');//得到反斜杠在字符串中的地址
+            int index = lastSlash - FilePath; //地址相减 获取反斜杠在字符串中的索引位置
+
+            char *FileName=&FilePath[index+1];//获取反斜杠之后的文件名称
+
+            QString ToPath=getNetDiskRoot()+ToNameStr+"/"+FileName;//组合目的地址
+            qDebug()<<"strFromPath="<<StrFilePath;
+            qDebug()<<"FromPath="<<FilePath;
+            qDebug()<<"ToPath="<<ToPath;
+
+
+            //QFile file(FilePath);
+            //QFile DestFile()
+            QFile sourceFile(FilePath);
+            QFile destFile(ToPath);
+
+            PDU *respdu=mkPDU(0);
+            respdu->uiMsgType=ENUM_MSG_TYPE_SHARE_FILE_RESULT;
+
+
+            if (!sourceFile.exists()) {
+                qDebug() << "源文件不存在";
+                strcpy(respdu->caData,SHARE_FILE_NOEXISTS);
+            }else if (destFile.exists()) {
+                qDebug() << "目标文件已存在";
+                strcpy(respdu->caData,SHARE_FILE_EXISTS);
+            }else if (QFile::copy(FilePath, ToPath)) {
+                qDebug() << "文件复制成功";
+                strcpy(respdu->caData,SHARE_FILE_SUCESS);
+            } else {
+                qDebug() << "文件复制失败";
+                strcpy(respdu->caData,SHARE_FILE_FALIED);
+            }
+            write((char *)respdu,respdu->uiPDULen);
+            free(respdu);
+            respdu=NULL;
+
             break;
         }
         default:

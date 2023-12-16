@@ -130,10 +130,11 @@ void ShareFile::OKShare()
     //caMsg：分享者名称*n+分享文件的地址
     QString strName=TcpClient::getInstance().getLoginName();//获取分享者的名称
     QString strCurrPath=TcpClient::getInstance().getCurrentPath();//获取当前位置
-    QString strShareFileName=NetDisk::getinstance().getShareFileName();//获取被分享的文件
+    QString strShareFileName=OpeWidget::getInstance().getNetDisk()->getShareFileName();//获取被分享的文件
     uint num=0;
 
     QString strPath=strCurrPath+"/"+strShareFileName;  //拼接文件的位置
+
 
     QList<QAbstractButton *> cbList=m_pButtonGrop->buttons();  //遍历所有好友，判断是否被选中
     for(int i=0;i<cbList.size();i++)
@@ -158,11 +159,12 @@ void ShareFile::OKShare()
     }
 
     memcpy((char *)(pdu->caMsg)+num*32,strPath.toStdString().c_str(),strPath.toUtf8().size());//补上被分享的文件的地址
+    qDebug()<<"strPath="<<strPath;
     TcpClient::getInstance().getTcpSocket().write((char *)pdu,pdu->uiPDULen);
     free(pdu);
     pdu=NULL;
 
-
+    this->hide();
 
 
 
@@ -171,5 +173,5 @@ void ShareFile::OKShare()
 
 void ShareFile::cancelShare()
 {
-
+    this->hide();
 }

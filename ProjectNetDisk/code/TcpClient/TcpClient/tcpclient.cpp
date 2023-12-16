@@ -422,6 +422,56 @@ void TcpClient::resvMsg()
 
         break;
     }
+    case ENUM_MSG_TYPE_SHARE_FILE_NOTE:
+    {
+        //qDebug()<<"收到了来自服务器的respdu：";
+        //Tools::getInstance().ShowPDU(pdu);
+
+        char caFromName[32];
+        strcpy(caFromName,pdu->caData);
+        char *ShareFilePath=new char[pdu->uiMsgLen];
+        memcpy(ShareFilePath,pdu->caMsg,pdu->uiMsgLen);
+
+        bool getFile;
+        getFile=QMessageBox::question(this,"文件分享",QString("收到了来自%1的文件分享，是否接受？\n文件地址为：%2").arg(caFromName).arg(ShareFilePath),QMessageBox::Yes|QMessageBox::No);
+        if(getFile==true)
+        {
+            //QMessageBox::information(this,"文件分享","您同意了文件分享");
+            //发送同意信号给服务器
+            PDU *respdu=mkPDU(pdu->uiMsgLen);
+            respdu->uiMsgType=ENUM_MSG_TYPE_SHARE_FILE_RESPOND;
+            strcpy(respdu->caData,TcpClient::getInstance().getLoginName().toStdString().c_str());
+            memcpy(respdu->caMsg,ShareFilePath,pdu->uiMsgLen);
+            TcpClient::getInstance().getTcpSocket().write((char *)respdu,respdu->uiPDULen);
+        }
+        else
+        {
+            QMessageBox::information(this,"文件分享",QString("您拒绝了来自%1文件分享").arg(caFromName));
+        }
+    }
+    case ENUM_MSG_TYPE_SHARE_FILE_RESULT:
+    {
+        qDebug()<<"收到了来自服务器的respdu：";
+        Tools::getInstance().ShowPDU(pdu);
+        if(0==strcmp(pdu->caData,SHARE_FILE_SUCESS))
+        {
+            QMessageBox::information(this,"文件分享",SHARE_FILE_SUCESS);
+        }else if(0==strcmp(pdu->caData,SHARE_FILE_NOEXISTS))
+        {
+            QMessageBox::information(this,"文件分享",SHARE_FILE_NOEXISTS);
+        }
+        else if(0==strcmp(pdu->caData,SHARE_FILE_EXISTS))
+        {
+            QMessageBox::information(this,"文件分享",SHARE_FILE_EXISTS);
+        }
+        else if(0==strcmp(pdu->caData,SHARE_FILE_FALIED))
+        {
+            QMessageBox::information(this,"文件分享",SHARE_FILE_FALIED);
+        }
+
+        OpeWidget::getInstance().getNetDisk()->Flush();
+        break;
+    }
     default:
         break;
     }

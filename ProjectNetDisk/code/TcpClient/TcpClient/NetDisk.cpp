@@ -97,6 +97,9 @@ NetDisk &NetDisk::getinstance()
     return instance;
 }
 
+
+
+
 void NetDisk::Flush()
 {
     this->FlushDir();
@@ -131,6 +134,8 @@ QString NetDisk::getShareFileName()
 {
     return this->m_strShareFileName;
 }
+
+
 
 
 

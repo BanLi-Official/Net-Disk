@@ -47,6 +47,11 @@ typedef unsigned int uint;
 #define UPLOAD_FILE_SUCESS "传输文件成功"
 #define UPLOAD_FILE_FALIED "传输文件失败"
 
+#define SHARE_FILE_NOEXISTS "源文件不存在"
+#define SHARE_FILE_EXISTS "文件已存在"
+#define SHARE_FILE_SUCESS "分享成功"
+#define SHARE_FILE_FALIED "分享失败：服务器端复制失败"
+
 enum ENUM_MSG_TYPE    //利用枚举类型，设置消息的类型
 {
     ENUM_MSG_TYPE_MIN=0,
@@ -92,6 +97,8 @@ enum ENUM_MSG_TYPE    //利用枚举类型，设置消息的类型
     ENUM_MSG_TYPE_DOWNLOAD_FILE_RESPOND,//下载文件的回复
     ENUM_MSG_TYPE_SHARE_FILE_REQUEST,//分享文件的请求
     ENUM_MSG_TYPE_SHARE_FILE_RESPOND,//分享文件的回复
+    ENUM_MSG_TYPE_SHARE_FILE_NOTE,//分享文件的通知
+    ENUM_MSG_TYPE_SHARE_FILE_RESULT,//分享文件的结果
 
 
     ENUM_MSG_TYPE_MAX=0x00ffffff

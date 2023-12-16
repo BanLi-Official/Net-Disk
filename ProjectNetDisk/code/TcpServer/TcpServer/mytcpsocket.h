@@ -12,6 +12,7 @@ class MyTcpSocket : public QTcpSocket  //包装一个TCPSocket用于区分谁发
 public:
     explicit MyTcpSocket(QObject *parent = nullptr);
     QString getName();
+    QString getNetDiskRoot();
 signals:
     void offline(MyTcpSocket *mysocket);//下线的信号
 public slots:
@@ -27,6 +28,8 @@ private:
     bool m_bUpload;
 
     QTimer *timer;
+
+    QString Root=QString("F:/WORKS/c++/ProjectNetDisk/code/TcpServer/build-TcpServer-Desktop_Qt_6_6_0_MinGW_64_bit-Debug/UserFile/");
 };
 
 #endif // MYTCPSOCKET_H

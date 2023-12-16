@@ -17,7 +17,7 @@ class NetDisk : public QWidget
 public:
     explicit NetDisk(QWidget *parent = nullptr);
     void updateFileList(const PDU *pdu);
-    static NetDisk& getinstance();
+    static NetDisk &getinstance();
     void Flush();//调用 FlushDir();刷新文件夹展示
     void setIs_DownLoading(bool status);//设置状态
     void setITotla(qint64 size);//设置文件大小
