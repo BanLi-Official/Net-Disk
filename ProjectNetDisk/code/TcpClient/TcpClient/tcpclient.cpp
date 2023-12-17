@@ -472,6 +472,29 @@ void TcpClient::resvMsg()
         OpeWidget::getInstance().getNetDisk()->Flush();
         break;
     }
+    case ENUM_MSG_TYPE_MOVE_FILE_RESPOND:
+    {
+        qDebug()<<"收到了来自服务器的respdu：";
+        Tools::getInstance().ShowPDU(pdu);
+        if(0==strcmp(pdu->caData,MOVE_FILE_SUCESS))
+        {
+            QMessageBox::information(this,"文件移动",MOVE_FILE_SUCESS);
+        }else if(0==strcmp(pdu->caData,MOVE_FILE_NOEXISTS))
+        {
+            QMessageBox::information(this,"文件移动",MOVE_FILE_NOEXISTS);
+        }
+        else if(0==strcmp(pdu->caData,MOVE_FILE_EXISTS))
+        {
+            QMessageBox::information(this,"文件移动",MOVE_FILE_EXISTS);
+        }
+        else if(0==strcmp(pdu->caData,MOVE_FILE_FALIED))
+        {
+            QMessageBox::information(this,"文件移动",MOVE_FILE_FALIED);
+        }
+
+        OpeWidget::getInstance().getNetDisk()->Flush();
+        break;
+    }
     default:
         break;
     }

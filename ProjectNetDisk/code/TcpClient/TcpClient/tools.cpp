@@ -25,8 +25,12 @@ void Tools::ShowPDU(PDU *pdu)
     QString str = QString::fromUtf8(pdu->caData, 64);
     str.replace(QChar('\u0000'), QChar(' '));
     qDebug()<<"              caData            pdu->caData:"<<str;
+    char *msg=new char[pdu->uiMsgLen];
+    memcpy(msg,pdu->caMsg,pdu->uiMsgLen);
     qDebug()<<"              实际消息长度        pdu->uiMsgLen:"<<pdu->uiMsgLen;
-    qDebug()<<"              消息内容           pdu->caMsg:"<<QString((char *)pdu->caMsg);
+    QString str2(msg);  // 将char*类型的字符串转换为QString
+    QByteArray unicodeData = str2.toUtf8();
+    qDebug() << "              消息内容 pdu->caMsg:" << unicodeData.data()<<"///";
 
 }
 

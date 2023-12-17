@@ -21,6 +21,10 @@ NetDisk::NetDisk(QWidget *parent)
     m_pDelDirPB=new QPushButton("删除文件/夹");
     m_pRenamePB=new QPushButton("重命名文件");
     m_pFlushDirPB=new QPushButton("刷新文件夹");
+    m_pMoveFilePB=new QPushButton("移动文件");
+    m_pSelectPathPB=new QPushButton("放置文件");
+
+    m_pSelectPathPB->setEnabled(false);//在没有选择文件之前先关闭掉选择路径的按钮
 
     QVBoxLayout *pDirVBL=new QVBoxLayout;
     pDirVBL->addWidget(m_pReturnPB);
@@ -40,6 +44,8 @@ NetDisk::NetDisk(QWidget *parent)
     pFileVBL->addWidget(m_pDownLoadPB);
     //pFileVBL->addWidget(m_pDelFilePB);
     pFileVBL->addWidget(m_pShareFilePB);
+    pFileVBL->addWidget(m_pMoveFilePB);
+    pFileVBL->addWidget(m_pSelectPathPB);
 
 
     QHBoxLayout *pMain=new QHBoxLayout;
@@ -59,6 +65,8 @@ NetDisk::NetDisk(QWidget *parent)
     connect(Timer,SIGNAL(timeout()),this,SLOT(UploadFileData()));
     connect(m_pDownLoadPB,SIGNAL(clicked(bool)),this,SLOT(DownLoadData()));
     connect(m_pShareFilePB,SIGNAL(clicked(bool)),this,SLOT(ShareFile_func()));
+    connect(m_pMoveFilePB,SIGNAL(clicked(bool)),this,SLOT(moveFile()));
+    connect(m_pSelectPathPB,SIGNAL(clicked(bool)),this,SLOT(SetPathAndSent()));
 
 
 }
@@ -423,6 +431,64 @@ void NetDisk::ShareFile_func()
     {
         ShareFile::getInstance().show();
     }
+}
+
+void NetDisk::moveFile()
+{
+    QListWidgetItem *item=m_pBookListW->currentItem();
+    if(item!=NULL)
+    {
+        this->m_strMoveSelectFileName=item->text().toUtf8();
+        QString currPath=TcpClient::getInstance().getCurrentPath();
+        this->m_strMoveSelectFilePath=currPath+"/"+m_strMoveSelectFileName;
+
+        this->m_pSelectPathPB->setEnabled(true);
+        //qDebug()<<"m_strMoveSelectFilePath="<<m_strMoveSelectFilePath;
+    }
+    else
+    {
+        QMessageBox::warning(this,"移动文件","请选择要移动的文件");
+    }
+}
+
+void NetDisk::SetPathAndSent()
+{
+    QListWidgetItem *item=m_pBookListW->currentItem();
+    int sourcePathSize;//文件源地址的长度
+    int destPathSize;//文件目的地址的长度
+    if(item!=NULL)
+    {
+        this->m_strMoveSelectDirName=item->text().toUtf8();
+        QString currPath=TcpClient::getInstance().getCurrentPath();
+        this->m_strMoveSelectDirPath=currPath+"/"+m_strMoveSelectDirName;
+        //qDebug()<<"m_strMoveSelectDirPath="<<m_strMoveSelectDirPath;
+    }
+    else
+    {
+        QString currPath=TcpClient::getInstance().getCurrentPath();
+        this->m_strMoveSelectDirPath=currPath;
+        //qDebug()<<"m_strMoveSelectDirPath="<<m_strMoveSelectDirPath;
+
+    }
+    this->m_pSelectPathPB->setEnabled(false);
+    sourcePathSize=m_strMoveSelectFilePath.toUtf8().size();
+    destPathSize=m_strMoveSelectDirPath.toUtf8().size();
+
+    //qDebug()<<"sourcePathSize="<<sourcePathSize;
+    //qDebug()<<"destPathSize="<<destPathSize;
+    qDebug()<<"m_strMoveSelectFilePath="<<m_strMoveSelectFilePath;
+    qDebug()<<"m_strMoveSelectDirPath="<<m_strMoveSelectDirPath;
+
+    //发送pdu
+    PDU *pdu=mkPDU(sourcePathSize+destPathSize+1);
+    pdu->uiMsgType=ENUM_MSG_TYPE_MOVE_FILE_REQUEST;
+    sprintf(pdu->caData,"%d %d",sourcePathSize,destPathSize);
+    QString  temp=m_strMoveSelectFilePath+m_strMoveSelectDirPath;
+    memcpy(pdu->caMsg,temp.toStdString().c_str(),sourcePathSize+destPathSize);
+    TcpClient::getInstance().getTcpSocket().write((char *)pdu,pdu->uiPDULen);
+    free(pdu);
+    pdu=NULL;
+
 }
 
 

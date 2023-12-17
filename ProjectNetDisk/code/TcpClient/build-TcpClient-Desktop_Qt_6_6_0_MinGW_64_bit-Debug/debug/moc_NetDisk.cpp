@@ -50,11 +50,13 @@ static constexpr auto qt_meta_stringdata_CLASSNetDiskENDCLASS = QtMocHelpers::st
     "UploadFile",
     "UploadFileData",
     "DownLoadData",
-    "ShareFile_func"
+    "ShareFile_func",
+    "moveFile",
+    "SetPathAndSent"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSNetDiskENDCLASS_t {
-    uint offsetsAndSizes[24];
+    uint offsetsAndSizes[28];
     char stringdata0[8];
     char stringdata1[10];
     char stringdata2[1];
@@ -67,6 +69,8 @@ struct qt_meta_stringdata_CLASSNetDiskENDCLASS_t {
     char stringdata9[15];
     char stringdata10[13];
     char stringdata11[15];
+    char stringdata12[9];
+    char stringdata13[15];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSNetDiskENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -83,7 +87,9 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSNetDiskENDCLASS_t qt_meta_strin
         QT_MOC_LITERAL(63, 10),  // "UploadFile"
         QT_MOC_LITERAL(74, 14),  // "UploadFileData"
         QT_MOC_LITERAL(89, 12),  // "DownLoadData"
-        QT_MOC_LITERAL(102, 14)   // "ShareFile_func"
+        QT_MOC_LITERAL(102, 14),  // "ShareFile_func"
+        QT_MOC_LITERAL(117, 8),  // "moveFile"
+        QT_MOC_LITERAL(126, 14)   // "SetPathAndSent"
     },
     "NetDisk",
     "CreateDir",
@@ -96,7 +102,9 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSNetDiskENDCLASS_t qt_meta_strin
     "UploadFile",
     "UploadFileData",
     "DownLoadData",
-    "ShareFile_func"
+    "ShareFile_func",
+    "moveFile",
+    "SetPathAndSent"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -108,7 +116,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSNetDiskENDCLASS[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-      10,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -116,18 +124,22 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSNetDiskENDCLASS[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   74,    2, 0x08,    1 /* Private */,
-       3,    0,   75,    2, 0x08,    2 /* Private */,
-       4,    0,   76,    2, 0x08,    3 /* Private */,
-       5,    0,   77,    2, 0x08,    4 /* Private */,
-       6,    0,   78,    2, 0x08,    5 /* Private */,
-       7,    0,   79,    2, 0x08,    6 /* Private */,
-       8,    0,   80,    2, 0x08,    7 /* Private */,
-       9,    0,   81,    2, 0x08,    8 /* Private */,
-      10,    0,   82,    2, 0x08,    9 /* Private */,
-      11,    0,   83,    2, 0x08,   10 /* Private */,
+       1,    0,   86,    2, 0x08,    1 /* Private */,
+       3,    0,   87,    2, 0x08,    2 /* Private */,
+       4,    0,   88,    2, 0x08,    3 /* Private */,
+       5,    0,   89,    2, 0x08,    4 /* Private */,
+       6,    0,   90,    2, 0x08,    5 /* Private */,
+       7,    0,   91,    2, 0x08,    6 /* Private */,
+       8,    0,   92,    2, 0x08,    7 /* Private */,
+       9,    0,   93,    2, 0x08,    8 /* Private */,
+      10,    0,   94,    2, 0x08,    9 /* Private */,
+      11,    0,   95,    2, 0x08,   10 /* Private */,
+      12,    0,   96,    2, 0x08,   11 /* Private */,
+      13,    0,   97,    2, 0x08,   12 /* Private */,
 
  // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -170,6 +182,10 @@ Q_CONSTINIT const QMetaObject NetDisk::staticMetaObject = { {
         // method 'DownLoadData'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'ShareFile_func'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'moveFile'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'SetPathAndSent'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -191,6 +207,8 @@ void NetDisk::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         case 7: _t->UploadFileData(); break;
         case 8: _t->DownLoadData(); break;
         case 9: _t->ShareFile_func(); break;
+        case 10: _t->moveFile(); break;
+        case 11: _t->SetPathAndSent(); break;
         default: ;
         }
     }
@@ -216,13 +234,13 @@ int NetDisk::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 10)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 12;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 10)
+        if (_id < 12)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 10;
+        _id -= 12;
     }
     return _id;
 }

@@ -852,9 +852,67 @@ void MyTcpSocket::recvMsg()//当有读信号出来的时候，就调用这个函
                     strcpy(respdu->caData,SHARE_FILE_FALIED);
                 }
             }
+            write((char *)respdu,respdu->uiPDULen);
+            free(respdu);
+            respdu=NULL;
+
+            break;
+        }
+        case ENUM_MSG_TYPE_MOVE_FILE_REQUEST:
+        {
+            //qDebug()<<"收到了来自客户端的pdu";
+            //Tools::getInstance().ShowPDU(pdu);
+            int sourcePathSize;
+            int destPathSize;
+            sscanf(pdu->caData,"%d %d",&sourcePathSize,&destPathSize);
+
+            //获取目的地址与源地址
+            char *sourcePath=new char[sourcePathSize];
+            char *destPath=new char[destPathSize];
+            memcpy(sourcePath,pdu->caMsg,sourcePathSize);
+            memcpy(destPath,(char *)pdu->caMsg+sourcePathSize,destPathSize);
+
+            //获取文件名称
+            char *PointChar_of_xie=strrchr(sourcePath,'/');
+            int index_of_xie=PointChar_of_xie-sourcePath;
+            char *FileName=&sourcePath[index_of_xie+1];
 
 
 
+            QString str_sourcePath=QString("%1").arg(sourcePath);//源地址化为QString格式
+            QString str_destPath=QString("%1").arg(destPath);//目的地址化为QString格式
+            QString str_destFilePath=str_destPath+"/"+FileName;
+            qDebug()<<"sourcePath="<<str_sourcePath;
+            qDebug()<<"destPath="<<str_destFilePath;
+
+
+            //制作返回的pdu送回客户端。
+            PDU *respdu=mkPDU(0);
+            respdu->uiMsgType=ENUM_MSG_TYPE_MOVE_FILE_RESPOND;
+
+            QFile source(str_sourcePath);
+            QFile dest(str_destFilePath);
+
+            if(!source.exists())
+            {
+                qDebug()<<"源文件不存在:"<<str_sourcePath;
+                strcpy(respdu->caData,MOVE_FILE_NOEXISTS);
+            }
+            else if(dest.exists())
+            {
+                qDebug()<<"文件已存在："<<str_destFilePath;
+                strcpy(respdu->caData,MOVE_FILE_EXISTS);
+            }
+            else if(source.rename(str_destFilePath))
+            {
+                qDebug()<<"文件移动成功！";
+                strcpy(respdu->caData,MOVE_FILE_SUCESS);
+            }
+            else
+            {
+                qDebug()<<"文件移动失败！";
+                strcpy(respdu->caData,MOVE_FILE_FALIED);
+            }
             write((char *)respdu,respdu->uiPDULen);
             free(respdu);
             respdu=NULL;

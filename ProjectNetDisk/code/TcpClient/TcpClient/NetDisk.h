@@ -46,6 +46,8 @@ private slots:
     void UploadFileData();//时间到就文件传输
     void DownLoadData();//下载文件
     void ShareFile_func();//分享
+    void moveFile();//移动文件
+    void SetPathAndSent();//选择放置地址并发送pdu
 
 
 
@@ -63,6 +65,8 @@ private:
     QPushButton *m_pDownLoadPB;  //删除文件
     QPushButton *m_pDelFilePB;   //下载文件
     QPushButton *m_pShareFilePB;   //分享文件
+    QPushButton *m_pMoveFilePB;    //选择要移动的文件
+    QPushButton *m_pSelectPathPB;    //选择要移动的文件
 
 
     QString OpenFilePath;//当前打开文件的地址
@@ -73,6 +77,11 @@ private:
     bool is_DownLoading;//下载状态
 
     QString m_strShareFileName;//用户分享的文件名称
+    QString m_strMoveSelectFileName;//用户选择的要移动的文件
+    QString m_strMoveSelectFilePath;//用户选择的要移动的文件地址
+    QString m_strMoveSelectDirName;//用户选择的要移动的文件夹名称
+    QString m_strMoveSelectDirPath;//用户选择的要移动的文件地址放置地址
+
 
 
 
